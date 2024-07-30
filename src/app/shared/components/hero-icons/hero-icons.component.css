@@ -1,0 +1,16 @@
+:host {
+  display: inline-flex;
+}
+
+.hero-icon {
+  display: flex;
+  width: var(--hero-icon-size);
+  height: var(--hero-icon-size);
+}
+
+::ng-deep {
+  .hero-icon svg {
+    display: block;
+    width: 100%;
+  }
+}

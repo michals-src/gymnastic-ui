@@ -1,0 +1,21 @@
+.control-select{
+
+    &__option{
+        @apply px-4 py-3 bg-gray-100 rounded-full flex items-center;
+
+
+        &--is-active{
+            --control-select-option-indicator-border: 4px;
+            @apply bg-blue-100;
+        }
+
+        &-indicator{
+            @apply rounded-full border ;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            aspect-ratio: 1 / 1;
+            box-shadow: inset 0 0 0 var(--control-select-option-indicator-border, 1px) #000000;
+        }
+    }
+}

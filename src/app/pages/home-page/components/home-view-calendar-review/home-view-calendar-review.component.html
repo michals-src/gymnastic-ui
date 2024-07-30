@@ -1,0 +1,30 @@
+@if(workoutsCalendar()){ @for(workoutsMonth of workoutsCalendar(); track $index){
+<div class="calendar-review">
+    <div class="mb-2 flex flex-nowrap items-center gap-4">
+        <p class="w-full h-[1px] bg-gray-100"></p>
+        <p class="text-sm font-bold">{{ workoutsMonth.date | date : 'MMM' }}</p>
+        <p class="w-full h-[1px] bg-gray-100"></p>
+    </div>
+
+    <div class="calendar-review__list bg-gray-100 p-4 rounded-3xl">
+        @for(workout of workoutsMonth.workouts; track $index){
+        <div class="calendar-review__list-item flex gap-4 flex-nowrap items-center">
+            <div
+                class="calendar-review__list-item__icon bg-white shadow-lg w-[48px] h-[38px] p-1 rounded-full border flex justify-center items-center">
+                <hero-icons [icon]="'calendar'" [size]="14" />
+            </div>
+            <div class="flex flex-col w-full">
+                <p class="text-sm font-bold leading-[150%]">{{ workout.createdAt | date : 'fullDate' }}</p>
+                <div class="flex flex-nowrap items-center gap-2 leading-[150%]">
+                    <p class="text-sm text-gray-400">{{ workout.durationTime }} czas trwania</p>
+                    <!-- <p class="text-sm text-gray-400">1 godzina 15 min.</p> -->
+                </div>
+            </div>
+            <div class="flex justify-center items-center">
+                <a [routerLink]="[WORKOUT_PAGE_ROUTES_ENUM.DEFAULT, workout.id]"><hero-icons [icon]="'chevron-right'" [size]="16" /></a>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+} }

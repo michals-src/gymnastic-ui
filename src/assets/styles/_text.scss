@@ -1,0 +1,17 @@
+.link{
+    @apply  text-sm;
+    line-height: 150%;
+    text-decoration: none;
+    color: var(--text-link-color, theme('textColor.gray.900'));
+
+    &:hover,
+    &:focus{
+        text-decoration: underline;
+        color: var(--text-link--hover-color, var(--text-link-color, theme('textColor.gray.700')));
+    }
+
+
+    &--light{
+        --text-link-color: theme('textColor.gray.400');
+    }
+}

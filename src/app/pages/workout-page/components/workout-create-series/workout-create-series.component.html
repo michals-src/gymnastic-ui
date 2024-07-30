@@ -1,0 +1,57 @@
+<div class="px-4 py-6">
+    <div class="mt-4 px-4">
+        <div class="flex flex-nowrap items-center mb-4">
+            <div class="w-1/2">
+                <h1 class="text-xs font-bold leading-[130%]">Powtórzenia</h1>
+                <input
+                    #repetitionsInput
+                    class="border-none outline-none text-4xl font-bold w-full"
+                    value="0"
+                    max="999"
+                    (focus)="
+                        repetitionsInput.type = 'text';
+                        repetitionsInput.setSelectionRange(0, repetitionsInput?.value?.length);
+                        repetitionsInput.type = 'number'
+                    "
+                    [ngModel]="repetitions()"
+                    (ngModelChange)="onInputChange('repetitions', $event)" />
+            </div>
+            <div class="w-1/2">
+                <h1 class="text-xs font-bold leading-[130%]">Obciążenie <span class="badge">kg</span></h1>
+                <input
+                    #weightInput
+                    class="border-none outline-none text-4xl font-bold w-full"
+                    value="0"
+                    max="999"
+                    (focus)="
+                        weightInput.type = 'text'; weightInput.setSelectionRange(0, weightInput?.value?.length); weightInput.type = 'number'
+                    "
+                    [ngModel]="weight()"
+                    (ngModelChange)="onInputChange('weight', $event)" />
+            </div>
+        </div>
+
+        <div class="w-full mb-8">
+            <p class="text-xs leading-[150%] mb-2">Poprzedni trening</p>
+            <div class="flex flex-nowrap items-center gap-2">
+                <div class="training-details__list-item__rep text-xs font-semibold">10x10</div>
+                <div class="w-[1px] h-[25px] bg-gray-300"></div>
+                <div class="training-details__list-item__rep text-xs font-semibold">10x10</div>
+                <div class="w-[1px] h-[25px] bg-gray-300"></div>
+                <div class="training-details__list-item__rep text-xs font-semibold">10x10</div>
+                <div class="w-[1px] h-[25px] bg-gray-300"></div>
+                <div class="training-details__list-item__rep text-xs font-semibold">10x10</div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-16">
+            <button class="button button--icon button--fulls" (click)="onSaveClickHandler()">
+                <hero-icons [icon]="'plus-circle'" [size]="24" />
+                <span>Zapisz</span>
+            </button>
+            <button class="button button--icon button--full button--plain" (click)="onNextExerciseClickHandler()">
+                <span>Następne ćwiczenie</span>
+            </button>
+        </div>
+    </div>
+</div>

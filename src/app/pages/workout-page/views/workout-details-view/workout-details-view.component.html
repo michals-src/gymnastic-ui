@@ -1,0 +1,74 @@
+<div class="p-4 border-b border-b-gray-200 sticky top-0 bg-white shadow-sm">
+    <a [routerLink]="['/']"
+        ><div class="flex items-center gap-2">
+            <hero-icons [icon]="'arrow-left'" [size]="14" />
+            <span class="text-sm leading-[150%]">Backlog</span>
+        </div></a
+    >
+</div>
+
+@if(workoutDetails()){
+<div class="px-4 py-6">
+    <div class="mb-5">
+        <div class="mb-2">
+            <h1 class="text-2xl leading-[130%] font-bold">Trening</h1>
+        </div>
+        <div class="flex items-center gap-2 mb-1">
+            <hero-icons [icon]="'calendar'" [size]="14" />
+            <p class="text-sm font-bold leading-[130%]">{{ workoutDetails()?.createdAt | date : 'fullDate' }}</p>
+        </div>
+        <div class="flex items-center text-gray-400 gap-2">
+            <hero-icons [icon]="'clock'" [size]="14" />
+            <p class="text-sm leading-[150%]">{{ workoutDetails().durationTime }} czas trwania</p>
+            <!-- <p class="text-sm leading-[150%]">1 godzina 15 min.</p> -->
+        </div>
+    </div>
+
+    <div class="training-details__list bg-gray-100 p-4 rounded-3xl">
+        @for(item of workoutTimeline(); track $index){
+        <div class="training-details__list-item">
+            <div class="flex items-center gap-2 mb-3">
+                <div class="bg-white shadow-lg p-2 rounded-full border flex justify-center items-center">
+                    <hero-icons [icon]="'check-circle'" [size]="20" />
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400">{{ item.exercise.muscle }}</p>
+                    <p class="text-sm font-bold leading-[130%]">{{ item.exercise.name }}</p>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <p class="text-xs leading-[150%] mb-2">Potwórzenia x obciążenie [kg]</p>
+                <div class="flex flex-nowrap items-center gap-2">
+                    @for(rep of item.series.reps; track $index; let last = $last){
+                    <div class="training-details__list-item__rep text-sm font-semibold">{{ rep?.count ?? 0 }}x{{ rep?.weight ?? 0 }}</div>
+                    @if(!last){
+                    <div class="w-[1px] h-[25px] bg-gray-300"></div>
+                    } }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+@if(isEditMode()){
+
+<app-workout-create-series />
+
+<app-bottom-bar>
+    <div class="flex gap-4">
+        <div class="w-1/2">
+            <button class="button button--icon button--full button--yellow">
+                <hero-icons [icon]="'pause-circle'" [size]="20" />
+                <span>Pauza</span>
+            </button>
+        </div>
+        <div class="w-1/2">
+            <button class="button button--icon button--full button--red" (click)="onStopClickHandler()">
+                <hero-icons [icon]="'stop'" [size]="20" />
+                <span>Stop</span>
+            </button>
+        </div>
+    </div>
+</app-bottom-bar>
+} }

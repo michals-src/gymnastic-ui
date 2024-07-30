@@ -1,0 +1,44 @@
+.bottom-sheet{
+    @apply inset-0 fixed;
+
+    &--is-open{
+        --bottom-sheet-backdrop-opacity: 1;
+        --bottom-sheet-window-transteY: 0%;
+    }
+
+    &--is-touch{
+        --bottom-sheet-window-transteY: var(--bottom-sheet--touch-translateY, 0%);
+        --bottom-sheet-window-transition: none;
+    }
+
+    &__backdrop{
+        @apply absolute inset-0;
+        background-color: rgba(0,0,0,.4);
+        opacity: var(--bottom-sheet-backdrop-opacity, 0);
+        transition: opacity .2s ease;
+        -webkit-transition: opacity .2s ease;
+    }
+
+    &__window{
+        @apply absolute bottom-2 inset-x-2;
+        max-height: 75vh;
+        transform: translateY(var(--bottom-sheet-window-transteY, 100%));
+        transition: var(--bottom-sheet-window-transition, transform .5s ease); 
+        -webkit-transition: var(--bottom-sheet-window-transition, transform .5s ease);
+        touch-action: pan-y;
+
+        &-bar{
+            width: 64px;
+            height: 5px;
+            background-color: #efefef;
+            border-radius: 12px;
+            margin-inline: auto;
+            margin-bottom: 10px;
+        }
+
+        &-content{
+            @apply bg-white rounded-2xl w-full p-4 overflow-y-auto touch-pan-y;
+            max-height: 75vh;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+.badge{
+    @apply inline-flex items-center bg-black text-white font-semibold rounded-lg;
+    background: var(--badge-background, theme('backgroundColor.black'));
+    color: var(--badge-color, theme('textColor.white'));
+    font-size: var(--badge-font-size, theme('fontSize.xs'));
+    padding: var(--badge-padding-y, theme('spacing.1')) var(--badge-padding-x, theme('spacing.2'));
+
+    &--outline{
+        background-color: transparent;
+        box-shadow: 0 0 0 1px var(--badge-background, theme('backgroundColor.black'));
+        color: var(--badge-background, theme('backgroundColor.black'));
+    }
+
+
+    &--sm{
+        --badge-padding-x: theme('spacing.2');
+        --badge-padding-y: 0.1rem;
+        --badge-font-size: 0.5rem;
+    }
+
+    &--gray{
+        --badge-background: theme('backgroundColor.gray.300');
+        --badge-color: theme('textColor.gray.900');
+    }
+}

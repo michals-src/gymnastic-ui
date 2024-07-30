@@ -1,0 +1,78 @@
+.button {
+    @apply outline-none rounded-3xl flex justify-center items-center text-sm font-semibold;
+    padding: var(--button-padding-y, theme('spacing.2')) var(--button-padding-x, theme('spacing.4'));
+    background-color: var(#{--button-background}, #000000);
+    color: var(#{--button-color}, #ffffff);
+
+    &:hover {
+        background-color: var(#{--button--hover-background}, #{theme('backgroundColor.zinc.700')});
+        color: var(#{--button--hover-color}, #ffffff);
+    }
+
+    &:disabled {
+        background-color: var(#{--button--disabled-background}, #{theme('backgroundColor.zinc.500')});
+        color: var(#{--button--disabled-color}, theme('textColor.zinc.100'));
+    }
+
+    &--big {
+        --button-padding-y: theme('spacing.4');
+        --button-padding-x: theme('spacing.4');
+    }
+
+    &--full {
+        @apply w-full;
+    }
+
+    &--icon {
+        @apply flex gap-2 items-center;
+    }
+
+    &--outline {
+        border: 1px solid var(#{--button-background}, #000000);
+        color: var(#{--button-background}, #000000);
+        background-color: transparent;
+
+        &:hover {
+            background-color: transparent;
+            border-color: var(#{--button--hover-background}, #{theme('backgroundColor.zinc.700')});
+            color: var(#{--button--hover-background}, #{theme('backgroundColor.zinc.700')});
+        }
+    }
+
+    &--red {
+        --button-background: #{theme('backgroundColor.red.600')};
+        --button-color: #{theme('textColor.white')};
+        --button--hover-background: #{theme('backgroundColor.red.800')};
+        --button--hover-color: #{theme('textColor.white')};
+    }
+
+    &--green {
+        --button-background: #{theme('backgroundColor.green.600')};
+        --button-color: #{theme('textColor.white')};
+        --button--hover-background: #{theme('backgroundColor.green.800')};
+        --button--hover-color: #{theme('textColor.white')};
+    }
+
+    &--blue {
+        --button-background: #{theme('backgroundColor.blue.600')};
+        --button-color: #{theme('textColor.white')};
+        --button--hover-background: #{theme('backgroundColor.blue.800')};
+        --button--hover-color: #{theme('textColor.white')};
+    }
+
+    &--yellow {
+        --button-background: #{theme('backgroundColor.yellow.400')};
+        --button-color: #{theme('textColor.yellow.950')};
+        --button--hover-background: #{theme('backgroundColor.yellow.600')};
+        --button--hover-color: #{theme('textColor.yellow.950')};
+    }
+
+    &--plain {
+        --button-padding-x: 0;
+        --button-padding-y: 0;
+        --button-background: none;
+        --button-color: #{theme('textColor.black')};
+        --button--hover-background: none;
+        --button--hover-color: #{theme('textColor.zinc.600')};
+    }
+}

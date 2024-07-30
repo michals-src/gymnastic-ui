@@ -1,0 +1,19 @@
+<div
+    class="bottom-sheet"
+    [ngClass]="{
+        'bottom-sheet--is-open': isOpened(),
+        'bottom-sheet--is-touch': isTouch(),
+    }"
+    [ngStyle]="{
+        '--bottom-sheet--touch-translateY': touchOffset() + 'px',
+    }">
+    <div class="bottom-sheet__backdrop"></div>
+    <div #bottomSheetWindow class="bottom-sheet__window">
+        @if(closable){
+        <div #bottomSheetWindowBar class="bottom-sheet__window-bar"></div>
+        }
+        <div #bottomSheetWindowContent class="bottom-sheet__window-content">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="px-4 py-6">
+    <h1 class="text-2xl font-bold leading-[130%] mb-4 flex items-center gap-4">
+        <span>Backlog</span>
+    </h1>
+    <app-home-view-calendar-review />
+</div>
+<app-bottom-bar>
+    <div class="flex flex-col justify-center">
+        <a [routerLink]="[WORKOUT_PAGE_ROUTES_ENUM.DEFAULT, WORKOUT_PAGE_ROUTES_ENUM.CREATE]" class="button m-auto py-3 px-6">
+            <div class="flex flex-nowrap gap-2">
+                <hero-icons [icon]="'plus'" [size]="20" />
+                <p class="text-xs leading-[150%]">Nowy trening</p>
+            </div>
+        </a>
+    </div>
+</app-bottom-bar>
