@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeroIconsComponent } from './shared/components/hero-icons/hero-icons.component';
 import { BottomSheetComponent } from './shared/components/bottom-sheet/bottom-sheet.component';

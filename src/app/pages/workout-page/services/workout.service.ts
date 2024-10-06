@@ -1,77 +1,72 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { IWorkout } from '../../../shared/interfaces/i-workout';
-import { IWorkoutResponse, IWorkoutTimeline } from '../views/workout-details-view/workout-details-view.component';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { IWorkoutResponse, IWorkoutSetsResponse } from '../views/workout-details-view/workout-details-view.component';
+import { of, tap } from 'rxjs';
+import { ApiService } from '@app/shared/services/api.service';
+import { WorkoutExercise } from '@app/pages/workout-page/classes/workout-exercise.class';
+import { WorkoutStore } from '@app/pages/workout-page/services/workout-store.service';
 
 @Injectable()
-export class WorkoutService {
-    private httpClient = inject(HttpClient);
+export class WorkoutService extends WorkoutStore {
+    private apiService = inject(ApiService);
 
-    public workoutId: WritableSignal<number> = signal(null);
-    public workoutDetails: WritableSignal<IWorkout> = signal(null);
-    public workoutTimeline: WritableSignal<IWorkoutTimeline[]> = signal(null);
+    public readonly workoutId = this._workoutId.asReadonly();
+    public readonly workoutDetails = this._workoutDetails.asReadonly();
+    public readonly workoutExercises = this._workoutExercises.asReadonly();
+    public readonly selectedWorkoutExerciseId = this._selectedWorkoutExerciseId.asReadonly();
 
-    public exerciseId: WritableSignal<number> = signal(null);
+    createExercise(exerciseId: number) {
+        return this.apiService
+            .post('/series', {
+                workoutId: this.workoutId(),
+                exerciseId: exerciseId,
+            })
+            .pipe(tap((id: number) => this.setSelectedWorkoutExerciseId(id)));
+    }
 
-    setWorkoutId(id: number): void {
-        this.workoutId.set(id);
+    getLastExerciseSeries() {
+        return this.apiService.get<IWorkoutSetsResponse[]>(
+            '/series/previous/' + this.selectedWorkoutExercise().seriesId + '/' + this.selectedWorkoutExerciseId()
+        );
     }
 
     getWorkout() {
-        this.httpClient.get<IWorkoutResponse>('http://localhost:3000/workouts/' + this.workoutId()).subscribe((data) => {
+        this.apiService.get<IWorkoutResponse>('/workouts/' + this.workoutId()).subscribe((data) => {
             const _workout = data?.workout || null;
             if (_workout) {
-                const timeline = data.timeline.map(({ exercise, series }) => {
-                    const _reps = JSON.parse(series.reps);
+                const exercises = [];
 
-                    return {
-                        exercise,
-                        series: {
-                            ...series,
-                            reps: _reps,
-                        },
-                    };
+                data.timeline.forEach(({ exercise, series }) => {
+                    const _reps = JSON.parse(series.reps);
+                    exercises.push(
+                        new WorkoutExercise(
+                            exercise.id,
+                            _workout.id,
+                            series.id,
+                            exercise.name,
+                            exercise.muscle,
+                            _reps,
+                            series.createdAt
+                        )
+                    );
                 });
-                this.workoutDetails.set(_workout);
-                this.workoutTimeline.set(timeline);
+
+                this.setWorkoutDetails(_workout);
+                this.setWWorkoutExercises(exercises);
             }
         });
     }
 
     updateExercise() {
-        const _series = this.workoutTimeline().find(({ exercise }) => exercise.id === this.exerciseId())?.series;
+        const selectedWorkoutExercise = this.selectedWorkoutExercise();
+        const _seriesId = selectedWorkoutExercise.seriesId;
+        const _series = selectedWorkoutExercise.series();
+        console.log(selectedWorkoutExercise);
         if (_series) {
-            return this.httpClient.put<number>('http://localhost:3000/series/' + _series.id, {
-                reps: JSON.stringify(_series.reps),
+            return this.apiService.put<number>('/series/' + _seriesId, {
+                reps: JSON.stringify(_series),
             });
         }
 
         return of(null);
-    }
-
-    attachExercise(exerciseId: number): void {
-        this.exerciseId.set(exerciseId);
-    }
-
-    detachExercise(): void {
-        this.exerciseId.set(null);
-    }
-
-    insertSet(count: number, weight: number): void {
-        this.workoutTimeline.update((state) => {
-            const _el = state.find(({ exercise }) => exercise.id === this.exerciseId());
-
-            if (_el) {
-                const _reps = (_el.series?.reps as any) || [];
-                _reps.push({
-                    count: +count,
-                    weight: +weight,
-                });
-                _el.series.reps = _reps;
-            }
-
-            return state;
-        });
     }
 }

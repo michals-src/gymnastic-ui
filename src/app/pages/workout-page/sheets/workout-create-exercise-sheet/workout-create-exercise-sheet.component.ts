@@ -1,16 +1,27 @@
-import { Component, computed, inject, Signal, signal, WritableSignal } from '@angular/core';
-import { HeroIconsComponent } from '../../../../shared/components/hero-icons/hero-icons.component';
-import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet/bottom-sheet.component';
+import {
+    Component,
+    computed,
+    EventEmitter,
+    inject,
+    Input,
+    Output,
+    Signal,
+    signal,
+    ViewChild,
+    WritableSignal,
+} from '@angular/core';
+import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
+import { BottomSheetComponent } from '@app/shared/components/bottom-sheet/bottom-sheet.component';
 import {
     ControlSelectComponent,
     IControlSelectOption,
-} from '../../../../shared/components/controls/control-select/control-select.component';
-import { ExercisesService } from '../../../../shared/services/exercises.service';
+} from '@app/shared/components/controls/control-select/control-select.component';
+import { ExercisesService } from '@app/shared/services/exercises.service';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe, NgClass } from '@angular/common';
-import { OverlayControllerService } from '../../../../shared/services/overlay-controller.service';
+import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
 import { WorkoutService } from '../../services/workout.service';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from '@app/shared/services/api.service';
 
 @Component({
     selector: 'app-workout-create-exercise-sheet',
@@ -20,7 +31,7 @@ import { HttpClient } from '@angular/common/http';
     imports: [HeroIconsComponent, BottomSheetComponent, ControlSelectComponent, FormsModule, JsonPipe, NgClass],
 })
 export class WorkoutCreateExerciseSheetComponent {
-    protected httpClient = inject(HttpClient);
+    protected apiService = inject(ApiService);
     protected overlayController = inject(OverlayControllerService);
     protected workoutService = inject(WorkoutService);
 
@@ -34,6 +45,10 @@ export class WorkoutCreateExerciseSheetComponent {
             value: `${key.substring(0, 1).toUpperCase()}${key.substring(1)}`,
         }))
     );
+    @Input() public closable: boolean = false;
+    @Output() public onCreate: EventEmitter<number> = new EventEmitter();
+
+    @ViewChild('addWorkoutExerciseBottomSheet') addWorkoutExerciseBottomSheet: BottomSheetComponent | undefined;
 
     protected exercises = computed(() => {
         return this.exercisesCollection().get(this.selectedMuscle()?.id);
@@ -41,30 +56,32 @@ export class WorkoutCreateExerciseSheetComponent {
 
     constructor(protected exercisesService: ExercisesService) {}
 
-    onMuscleChangeHandler(value: any) {
+    changeExercise(value: any) {
         if (value) {
             this.selectedMuscle.set(value);
         }
     }
 
-    onExerciseClickHandler(id: number): void {
+    clickExercise(id: number): void {
         this.selectedExercise.update((state) => {
             if (state == id) return null;
             return id;
         });
     }
 
-    onCreateClickHandler(): void {
-        this.httpClient
-            .post('http://localhost:3000/series', {
-                workoutId: this.workoutService.workoutId(),
-                exerciseId: this.selectedExercise(),
-            })
-            .subscribe((id: number) => {
-                if (id) {
-                    this.workoutService.attachExercise(this.selectedExercise());
-                    this.overlayController.close('WorkoutCreateExerciseSheetComponent');
-                }
-            });
+    clickCreate(): void {
+        this.onCreate.emit(this.selectedExercise());
+    }
+
+    clickCancel(): void {
+        this.close();
+    }
+
+    protected closeOverlay(): void {
+        this.overlayController.close('WorkoutCreateExerciseSheetComponent');
+    }
+
+    private close(): void {
+        this.addWorkoutExerciseBottomSheet.onCloseHandler();
     }
 }

@@ -1,10 +1,18 @@
-import { Component, ComponentFactoryResolver, inject, Injector, signal, ViewContainerRef, WritableSignal } from '@angular/core';
+import {
+    Component,
+    ComponentFactoryResolver,
+    inject,
+    Injector,
+    signal,
+    ViewContainerRef,
+    WritableSignal,
+} from '@angular/core';
 import { HeroIconsComponent } from '../../../../shared/components/hero-icons/hero-icons.component';
 import { WorkoutService } from '../../services/workout.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { filter } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { OverlayControllerService } from '../../../../shared/services/overlay-controller.service';
 
 @Component({
@@ -25,27 +33,44 @@ export class WorkoutCreateSeriesComponent {
     repetitions: WritableSignal<number> = signal(0);
     weight: WritableSignal<number> = signal(0);
 
-    onInputChange(type: string, value: number): void {
+    protected lastExerciseSeries: WritableSignal<any> = signal(null);
+
+    public ngOnInit(): void {
+        this.workoutService
+            .getLastExerciseSeries()
+            .pipe(
+                filter((data) => !!data),
+                map((data) => data.pop())
+            )
+            .subscribe((data) => {
+                this.lastExerciseSeries.set({
+                    ...data,
+                    reps: JSON.parse(data.reps),
+                });
+            });
+    }
+
+    protected onInputChange(type: string, value: number): void {
         if (type === 'repetitions') this.repetitions.set(value);
         if (type === 'weight') this.weight.set(value);
     }
 
-    onSaveClickHandler(): void {
+    protected onSaveClickHandler(): void {
         const count = this.repetitions();
         const weight = this.weight();
 
-        this.workoutService.insertSet(count, weight);
+        // this.workoutService.insertSet(count, weight);
 
         this.repetitions.set(0);
         this.weight.set(0);
     }
 
-    onNextExerciseClickHandler(): void {
+    protected onNextExerciseClickHandler(): void {
         this.workoutService
             .updateExercise()
             .pipe(filter((res) => !!res))
             .subscribe(() => {
-                import('../../components/workout-create-exercise-sheet/workout-create-exercise-sheet.component').then(
+                import('../../sheets/workout-create-exercise-sheet/workout-create-exercise-sheet.component').then(
                     ({ WorkoutCreateExerciseSheetComponent }) => {
                         this.overlayControllerService
                             .open(
@@ -57,7 +82,7 @@ export class WorkoutCreateSeriesComponent {
                                     this.componentFactoryResolver
                                 )
                             )
-                            .close$.subscribe(() => this.workoutService.getWorkout());
+                            .close.subscribe(() => this.workoutService.getWorkout());
                     }
                 );
             });

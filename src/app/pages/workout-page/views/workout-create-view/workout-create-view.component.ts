@@ -2,11 +2,12 @@ import { Component, ComponentFactoryResolver, inject, ViewContainerRef } from '@
 import { HeroIconsComponent } from '../../../../shared/components/hero-icons/hero-icons.component';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { OverlayControllerService } from '../../../../shared/services/overlay-controller.service';
 import { WORKOUT_PAGE_ROUTES_ENUM } from '../../workout-page.routes';
 import { WorkoutService } from '../../services/workout.service';
+import { ApiService } from '@app/shared/services/api.service';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-workout-create-view',
@@ -27,22 +28,21 @@ export class WorkoutCreateViewComponent {
     protected overlay = inject(Overlay);
     protected viewContainerRef = inject(ViewContainerRef);
     protected componentFactoryResolver = inject(ComponentFactoryResolver);
-    protected httpClient = inject(HttpClient);
+    protected apiService = inject(ApiService);
     protected router = inject(Router);
     protected workoutService = inject(WorkoutService);
 
-    protected overlayControllerService = inject(OverlayControllerService);
+    protected overlayController = inject(OverlayControllerService);
 
     public ngOnInit(): void {
-        this.httpClient.post('http://localhost:3000/workouts', {}).subscribe((id: number) => {
+        this.apiService.post('/workouts', {}).subscribe((id: number) => {
             if (!id) {
                 this.router.navigate(['/']);
             } else {
                 this.workoutService.setWorkoutId(id);
-
-                import('../../components/workout-create-exercise-sheet/workout-create-exercise-sheet.component').then(
+                import('../../sheets/workout-create-exercise-sheet/workout-create-exercise-sheet.component').then(
                     ({ WorkoutCreateExerciseSheetComponent }) => {
-                        const reference = this.overlayControllerService.open(
+                        const reference = this.overlayController.open(
                             'WorkoutCreateExerciseSheetComponent',
                             new ComponentPortal(
                                 WorkoutCreateExerciseSheetComponent,
@@ -51,7 +51,15 @@ export class WorkoutCreateViewComponent {
                                 this.componentFactoryResolver
                             )
                         );
-                        reference.close$.subscribe(() => {
+                        reference.instance.onCreate.subscribe((exerciseId) => {
+                            this.workoutService
+                                .createExercise(exerciseId)
+                                .pipe(filter((id) => !!id))
+                                .subscribe(() => {
+                                    this.overlayController.close('WorkoutCreateExerciseSheetComponent');
+                                });
+                        });
+                        reference.close.subscribe(() => {
                             this.router.navigate(['/', WORKOUT_PAGE_ROUTES_ENUM.DEFAULT, id], {
                                 queryParams: { editable: true },
                             });

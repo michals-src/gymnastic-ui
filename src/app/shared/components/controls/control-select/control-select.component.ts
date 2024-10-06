@@ -1,14 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentRef,
-    forwardRef,
-    Input,
-    Self,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { HeroIconsComponent } from '../../hero-icons/hero-icons.component';
 import { ControlValueAccessor } from '@angular/forms';
 import { WritableSignal } from '@angular/core';

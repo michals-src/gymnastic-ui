@@ -2,26 +2,30 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { HeroIconsComponent } from '../../../../shared/components/hero-icons/hero-icons.component';
 import { WORKOUT_PAGE_ROUTES_ENUM } from '../../../workout-page/workout-page.routes';
 import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { IWorkout } from '../../../../shared/interfaces/i-workout';
-import { DatePipe } from '@angular/common';
+import { DatePipe, UpperCasePipe } from '@angular/common';
+import { ApiService } from '@app/shared/services/api.service';
 
 @Component({
     selector: 'app-home-view-calendar-review',
     standalone: true,
     templateUrl: './home-view-calendar-review.component.html',
     styleUrl: './home-view-calendar-review.component.scss',
-    imports: [HeroIconsComponent, RouterModule, DatePipe],
+    imports: [HeroIconsComponent, RouterModule, DatePipe, UpperCasePipe],
 })
 export class HomeViewCalendarReviewComponent {
-    private httpClient = inject(HttpClient);
+    private apiService = inject(ApiService);
     protected WORKOUT_PAGE_ROUTES_ENUM = WORKOUT_PAGE_ROUTES_ENUM;
 
     protected workoutsCalendar: WritableSignal<any> = signal(null);
 
     ngOnInit(): void {
         const currentMonth = new Date().getMonth() + 1;
-        this.httpClient.get<IWorkout[]>('http://localhost:3000/workouts/1/' + currentMonth).subscribe((data) => {
+
+        const startMonth = currentMonth - 2;
+        const endMonth = currentMonth;
+
+        this.apiService.get<IWorkout[]>(`/workouts/${startMonth}/${endMonth}`).subscribe((data) => {
             if (data) {
                 console.log(data);
                 const _data = Object.entries(

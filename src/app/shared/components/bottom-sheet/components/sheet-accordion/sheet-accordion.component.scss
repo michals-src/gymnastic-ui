@@ -1,0 +1,12 @@
+.sheet-accordion {
+    sheet-accordion-tab {
+        .sheet-accordion__tab {
+            @apply py-2;
+            border-bottom: 1px solid theme('textColor.zinc.300');
+        }
+
+        &:last-of-type .sheet-accordion__tab {
+            border-bottom: none;
+        }
+    }
+}
