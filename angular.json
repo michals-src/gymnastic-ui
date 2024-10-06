@@ -48,15 +48,21 @@
                             "serviceWorker": "ngsw-config.json",
                             "fileReplacements": [
                                 {
-                                    "replace": "src/environment/environment.ts",
-                                    "with": "src/environment/environment.prod.ts"
+                                    "replace": "./src/environment/environment.ts",
+                                    "with": "./src/environment/environment.prod.ts"
                                 }
                             ]
                         },
                         "development": {
                             "optimization": false,
                             "extractLicenses": false,
-                            "sourceMap": true
+                            "sourceMap": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environment/environment.ts",
+                                    "with": "src/environment/environment.dev.ts"
+                                }
+                            ]
                         }
                     },
                     "defaultConfiguration": "production"

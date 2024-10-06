@@ -1,4 +1,7 @@
-import { environment as environmentDev } from './environment.dev';
-export const environment = {
-    ...environmentDev,
+export interface Environment {
+    api_url: string;
+}
+
+export const environment: Environment = {
+    api_url: null,
 };
