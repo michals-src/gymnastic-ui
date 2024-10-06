@@ -11,7 +11,7 @@ import {
     WritableSignal,
     signal,
 } from '@angular/core';
-import { Subject, filter, fromEvent, map, of, switchMap, take, takeUntil, tap } from 'rxjs';
+import { Subject, filter, fromEvent, map, switchMap, take, takeUntil, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -33,14 +33,17 @@ export class BottomSheetComponent {
     @ViewChild('bottomSheetWindow') private bottomSheetWindow: ElementRef<HTMLDivElement> | undefined;
     @ViewChild('bottomSheetWindowContent') private bottomSheetWindowContent: ElementRef<HTMLDivElement> | undefined;
 
-    constructor(private readonly renderer: Renderer2, private readonly destroyRef: DestroyRef) {}
+    constructor(
+        private readonly renderer: Renderer2,
+        private readonly destroyRef: DestroyRef
+    ) {}
 
     public ngOnInit(): void {
         this.renderer.addClass(document.body, 'block-scroll');
     }
 
     public ngAfterViewInit(): void {
-        this.isOpened.set(true);
+        setTimeout(() => this.isOpened.set(true), 100);
         if (this.bottomSheetWindow) {
             fromEvent(this.bottomSheetWindow?.nativeElement, 'touchend')
                 .pipe(takeUntilDestroyed(this.destroyRef))

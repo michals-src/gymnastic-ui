@@ -11,13 +11,13 @@ export class OverlayControllerService {
     protected _map = new Map<string, OverlayRef>();
     private _close$ = new Subject<string>();
 
-    open<T>(id: string, reference: ComponentPortal<T> | TemplatePortal<T>): T & { close$: Observable<any> } {
+    open<T = any>(id: string, reference: ComponentPortal<T> | TemplatePortal<T>): T & { close: Observable<any> } & any {
         const _overlay = this.overlay.create();
         const _attachment = _overlay.attach(reference);
         this._map.set(id, _overlay);
 
         return Object.assign(_attachment, {
-            close$: this._close$.pipe(
+            close: this._close$.pipe(
                 filter((_id) => _id === id),
                 take(1)
             ),

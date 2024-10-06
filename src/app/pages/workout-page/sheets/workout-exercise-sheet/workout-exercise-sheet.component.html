@@ -1,0 +1,148 @@
+<app-bottom-sheet #workoutExerciseEditSheet (onClose)="closeBottomSheet()">
+    <div class="flex justify-between gap-10 mb-6 pl-4">
+        <button class="button button--plain text-xs font-normal" (click)="clickCancel()">Anuluj</button>
+        <button class="button button-icon button--blue text-xs gap-3" (click)="clickSave()">
+            <span>Zapisz</span>
+            <hero-icons [icon]="'chevron-right'" [size]="16" />
+        </button>
+    </div>
+    <div class="mb-3">
+        <div class="px-4">
+            <p class="text-xs leading-[150%] mb-2">
+                {{ exercise().group.substring(0, 1).toUpperCase() + '' + exercise().group.substring(1) }}
+            </p>
+        </div>
+        <div
+            class="px-4 py-2 bg-zinc-100 rounded-xl flex justify-between gap-4 items-center"
+            (click)="clickExerciseName()">
+            <p class="text-xs leading-[150%] font-semibold text-zinc-800">{{ exercise().name }}</p>
+            <div class="inline-flex gap-2 items-center">
+                <!-- @if (isExerciseChanged()) { -->
+                <button role="button" class="inline-flex flex-[0_1_32px]" (click)="clickExerciseClear($event)">
+                    <hero-icons
+                        [icon]="'x-mark'"
+                        class="text-white bg-zinc-500 rounded-full p-1 text-[12px]"
+                        [size]="12" />
+                </button>
+                <!-- } -->
+                <hero-icons [icon]="'chevron-right'" [size]="16" class="text-zinc-800" />
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <sheet-accordion>
+            <sheet-accordion-tab [header]="'Poprzedni trening'">
+                <div class="mt-2">
+                    <div class="flex flex-col gap-1">
+                        @for (
+                            previousWorkoutSeries of selectedWorkoutExercise().previousWorkoutSeries();
+                            track $index;
+                            let index = $index,
+                            even = $even
+                        ) {
+                            <div
+                                class="px-4 py-2 rounded-xl flex justify-between gap-4 items-center"
+                                [ngClass]="{
+                                    'bg-zinc-200': even,
+                                }">
+                                <p class="text-xs leading-[150%] font-semibold text-zinc-400">seria {{ index + 1 }}</p>
+                                <div class="flex justify-between gap-4 items-center">
+                                    <p class="text-xs leading-[150%] font-semibold text-zinc-800">
+                                        {{ previousWorkoutSeries.count }}x{{ previousWorkoutSeries.weight }}kg
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </sheet-accordion-tab>
+        </sheet-accordion>
+    </div>
+
+    <div class="mb-4 bg-zinc-100 rounded-xl px-4 py-2">
+        <div class="flex flex-nowrap items-center">
+            <div class="w-1/2">
+                <p class="text-xs font-semibold leading-[130%] flex items-center mb-2 h-[24px]">Powtórzenia</p>
+                <label for="" class="flex pr-2 items-center gap-2">
+                    <input
+                        [ngModel]="repetitions()"
+                        (ngModelChange)="onInputChange('repetitions', $event)"
+                        #repetitionsInput
+                        class="border-none outline-none text-4xl font-bold w-full bg-transparent"
+                        [placeholder]="placeholder()[0]?.count ?? 0"
+                        max="999"
+                        (focus)="
+                            repetitionsInput.type = 'text';
+                            repetitionsInput.setSelectionRange(0, repetitionsInput?.value?.length);
+                            repetitionsInput.type = 'number'
+                        " />
+                    @if (repetitionsInput.value?.length) {
+                        <button
+                            role="button"
+                            class="inline-flex flex-[0_1_32px]"
+                            (click)="clearInputValue('repetitions')">
+                            <hero-icons
+                                [icon]="'x-mark'"
+                                class="text-white bg-zinc-500 rounded-full p-1 text-[12px]"
+                                [size]="12" />
+                        </button>
+                    }
+                </label>
+            </div>
+            <div class="w-1/2">
+                <p class="text-xs font-semibold leading-[130%] flex items-center gap-1 mb-2 h-[24px]">
+                    Obciążenie <span class="badge">kg</span>
+                </p>
+                <label for="" class="flex pr-2 items-center gap-2">
+                    <input
+                        [ngModel]="weight()"
+                        (ngModelChange)="onInputChange('weight', $event)"
+                        #weightInput
+                        class="border-none outline-none text-4xl font-bold w-full bg-transparent"
+                        [placeholder]="placeholder()[0]?.weight ?? 0"
+                        max="999"
+                        (focus)="
+                            weightInput.type = 'text';
+                            weightInput.setSelectionRange(0, weightInput?.value?.length);
+                            weightInput.type = 'number'
+                        " />
+                    @if (weightInput.value?.length) {
+                        <button role="button" class="inline-flex flex-[0_1_32px]" (click)="clearInputValue('weight')">
+                            <hero-icons
+                                [icon]="'x-mark'"
+                                class="text-white bg-zinc-500 rounded-full p-1 text-[12px]"
+                                [size]="12" />
+                        </button>
+                    }
+                </label>
+            </div>
+        </div>
+        <div class="my-2">
+            <button class="button button--icon button--full" (click)="addSeriesHandler()">
+                <hero-icons [icon]="'plus-circle'" [size]="24" />
+                <span class="pr-2">Dodaj</span>
+            </button>
+        </div>
+    </div>
+    <div>
+        <div class="px-4"><p class="text-xs leading-[150%] mb-2">Wyniki</p></div>
+        <div class="flex flex-col gap-1">
+            @for (reps of exerciseSeries(); track $index; let i = $index, e = $even) {
+                <div
+                    class="px-4 py-2 rounded-xl flex justify-between gap-4 items-center"
+                    [ngClass]="{
+                        'bg-zinc-100': e,
+                    }"
+                    (click)="clickEditSeries(reps.count, reps.weight, i)">
+                    <p class="text-xs leading-[150%] font-semibold text-zinc-400">seria {{ i + 1 }}</p>
+                    <div class="flex justify-between gap-4 items-center">
+                        <p class="text-xs leading-[150%] font-semibold text-zinc-800">
+                            {{ reps.count }}x{{ reps.weight }}kg
+                        </p>
+                        <hero-icons [icon]="'chevron-right'" [size]="16" class="text-zinc-800" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</app-bottom-sheet>
