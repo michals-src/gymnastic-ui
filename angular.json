@@ -35,7 +35,7 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
+                                    "maximumWarning": "1mb",
                                     "maximumError": "1mb"
                                 },
                                 {
@@ -48,12 +48,8 @@
                             "serviceWorker": "ngsw-config.json",
                             "fileReplacements": [
                                 {
-                                    "replace": "src/environment/environemt.ts",
-                                    "with": "src/environment/environemt.prod.ts"
-                                },
-                                {
-                                    "replace": "src/environment/environemt.ts",
-                                    "with": "src/environment/environemt.dev.ts"
+                                    "replace": "src/environment/environment.ts",
+                                    "with": "src/environment/environment.prod.ts"
                                 }
                             ]
                         },
