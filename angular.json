@@ -28,7 +28,8 @@
                         "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
                         "styles": ["src/styles.scss"],
                         "scripts": [],
-                        "serviceWorker": "ngsw-config.json"
+                        "serviceWorker": "ngsw-config.json",
+                        "server": "src/main.server.ts"
                     },
                     "configurations": {
                         "production": {
@@ -51,7 +52,8 @@
                                     "replace": "./src/environment/environment.ts",
                                     "with": "./src/environment/environment.prod.ts"
                                 }
-                            ]
+                            ],
+                            "appShell": true
                         },
                         "development": {
                             "optimization": false,
