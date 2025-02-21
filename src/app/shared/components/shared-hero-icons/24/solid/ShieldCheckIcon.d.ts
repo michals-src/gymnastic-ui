@@ -1,0 +1,1 @@
+export type ShieldCheckIcon = `ShieldCheckIcon`;

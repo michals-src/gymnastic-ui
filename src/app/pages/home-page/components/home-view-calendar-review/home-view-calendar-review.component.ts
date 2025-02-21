@@ -2,49 +2,42 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { HeroIconsComponent } from '../../../../shared/components/hero-icons/hero-icons.component';
 import { WORKOUT_PAGE_ROUTES_ENUM } from '../../../workout-page/workout-page.routes';
 import { RouterModule } from '@angular/router';
-import { IWorkout } from '../../../../shared/interfaces/i-workout';
+import { IWorkoutCalendar } from '../../../../shared/interfaces/i-workout';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { ApiService } from '@app/shared/services/api.service';
+import { CapitalizePipe } from '@app/shared/pipes/capitalize.pipe';
+import { getISOWithOffset } from '@app/shared/functions/get-iso-with-offset';
 
 @Component({
     selector: 'app-home-view-calendar-review',
     standalone: true,
     templateUrl: './home-view-calendar-review.component.html',
     styleUrl: './home-view-calendar-review.component.scss',
-    imports: [HeroIconsComponent, RouterModule, DatePipe, UpperCasePipe],
+    imports: [CapitalizePipe, HeroIconsComponent, RouterModule, DatePipe, UpperCasePipe],
 })
 export class HomeViewCalendarReviewComponent {
     private apiService = inject(ApiService);
     protected WORKOUT_PAGE_ROUTES_ENUM = WORKOUT_PAGE_ROUTES_ENUM;
 
-    protected workoutsCalendar: WritableSignal<any> = signal(null);
+    protected workoutsCalendar: WritableSignal<IWorkoutCalendar[]> = signal(null);
 
     ngOnInit(): void {
-        const currentMonth = new Date().getMonth() + 1;
+        const currentDate = new Date();
+        const monthOffset = 8;
 
-        const startMonth = currentMonth - 2;
-        const endMonth = currentMonth;
+        const startYear =
+            currentDate.getMonth() - monthOffset < 0 ? currentDate.getFullYear() - 1 : currentDate.getFullYear();
+        const startMonth = Math.abs(currentDate.getDate() - monthOffset);
 
-        this.apiService.get<IWorkout[]>(`/workouts/${startMonth}/${endMonth}`).subscribe((data) => {
-            if (data) {
-                console.log(data);
-                const _data = Object.entries(
-                    data.reduce((_obj, _el) => {
-                        const month = new Date(_el.createdAt).getMonth() + 1;
+        const startDate = getISOWithOffset(new Date(startYear, startMonth, 1));
+        const endDate = getISOWithOffset(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0));
 
-                        if (!_obj.hasOwnProperty(month)) {
-                            _obj[month] = [];
-                        }
-                        _obj[month].push(_el);
-                        return _obj;
-                    }, {})
-                ).map(([month, workouts]: any) => ({
-                    date: this.getDate(month - 1),
-                    workouts,
-                }));
-                console.log(_data);
-                this.workoutsCalendar.set(_data.reverse());
-            }
+        const params = new URLSearchParams({
+            from: startDate,
+            to: endDate,
+        });
+        this.apiService.get<IWorkoutCalendar[]>(`/workouts?${params}`).subscribe((data) => {
+            this.workoutsCalendar.set(data);
         });
     }
 

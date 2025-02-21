@@ -1,0 +1,1 @@
+export type PrinterIcon = `PrinterIcon`;

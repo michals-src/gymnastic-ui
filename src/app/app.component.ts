@@ -1,20 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, createComponent, EnvironmentInjector } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeroIconsComponent } from './shared/components/hero-icons/hero-icons.component';
-import { BottomSheetComponent } from './shared/components/bottom-sheet/bottom-sheet.component';
 import { ExercisesService } from './shared/services/exercises.service';
+import { TestComponent } from '@app/test.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [RouterOutlet, HeroIconsComponent, BottomSheetComponent],
+    imports: [RouterOutlet],
 })
 export class AppComponent {
     title = 'gymnastic';
 
-    constructor(protected exercisesService: ExercisesService) {
+    constructor(
+        protected exercisesService: ExercisesService,
+        private readonly envInjector: EnvironmentInjector
+    ) {
         this.exercisesService.getExercises();
+    }
+
+    ngAfterViewInit(): void {
+        const _component = createComponent(TestComponent, { environmentInjector: this.envInjector });
+        _component.setInput('dane', 'sgfsdfgwer');
+        _component.hostView.detectChanges();
+        console.log(_component.location);
+
+        const _iframe = document.createElement('iframe');
+        _iframe.style.display = 'none';
+        const _x = document.body.appendChild(_iframe);
+        // _iframe.contentWindow.document.body.appendChild(_component.instance.elementRef.nativeElement);
+
+        // console.log(_x.contentWindow.document.body.appendChild(_component.instance.elementRef.nativeElement));
+        // _x.contentWindow.print();
+        _component.destroy();
     }
 }

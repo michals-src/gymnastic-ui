@@ -1,37 +1,64 @@
 @if (workoutDetails()) {
-    <div class="px-4 py-6">
+    <div>
         <app-workout-view-header [workoutDetails]="workoutDetails()" />
 
-        <div class="px-4">
-            <p class="text-xs leading-[150%] mb-2">Potwórzenia x obciążenie [kg]</p>
-        </div>
-        <div class="training-details__list bg-gray-100 p-4 rounded-3xl">
+        <div class="training-details__list bg-neutral-100">
             @for (workoutExercise of workoutExercises(); track $index) {
-                <div class="training-details__list-item" (click)="onWorkoutExerciseClickHandler(workoutExercise.id)">
-                    <div class="flex items-center gap-2 mb-3">
-                        <!-- <div class="bg-white shadow-lg p-2 rounded-full border flex justify-center items-center">
-                    <hero-icons [icon]="'check-circle'" [size]="20" />
-                </div> -->
+                <div
+                    class="training-details__list-item border-b-4 border-b-white"
+                    (click)="onWorkoutExerciseClickHandler(workoutExercise.id)">
+                    <div class="flex items-center gap-2 px-8 py-4">
                         <div>
-                            <p class="text-xs text-gray-400">{{ workoutExercise.group }}</p>
+                            <p class="text-xs text-gray-600">{{ workoutExercise.group }}</p>
                             <p class="text-sm font-bold leading-[130%]">{{ workoutExercise.name }}</p>
                         </div>
                     </div>
 
-                    <div class="w-full">
+                    <div class="w-full bg-gray-200 p-8">
                         @if (workoutExercise.series()?.length) {
-                            <div class="flex flex-nowrap items-center gap-2 overflow-x-auto">
-                                @for (rep of workoutExercise.series(); track $index; let last = $last) {
-                                    <div class="training-details__list-item__rep text-sm font-semibold">
-                                        {{ rep?.count ?? 0 }}x{{ rep?.weight ?? 0 }}
+                            <app-shared-chart-bar
+                                [data]="chartData"
+                                [x]="'weight'"
+                                [y]="'count'"
+                                [axisX]="axisX"
+                                [axisX]="axisY">
+                                <ng-template #axisX let-data>
+                                    {{ data?.weight }}
+                                </ng-template>
+                                <ng-template #axisY let-data>
+                                    {{ data?.count }}
+                                </ng-template>
+                            </app-shared-chart-bar>
+                            <div class="grid grid-cols-12 items-center">
+                                <div class="col-span-3 text-sm p-2 text-zinc-600">Seria</div>
+                                <div class="col-span-4 text-sm p-2 text-zinc-600">Ilość</div>
+                                <div class="col-span-5 text-sm p-2 text-zinc-600">Ciężar</div>
+                                @for (rep of workoutExercise.series(); track idx; let last = $last, idx = $index) {
+                                    <div
+                                        class="col-span-3 text-sm p-2 text-zinc-600"
+                                        [ngClass]="{
+                                            'border-b border-b-gray-300': !last,
+                                        }">
+                                        {{ idx + 1 }}
                                     </div>
-                                    @if (!last) {
-                                        <div class="w-[1px] h-[25px] bg-gray-300"></div>
-                                    }
+                                    <div
+                                        class="col-span-4 text-sm font-bold p-2"
+                                        [ngClass]="{
+                                            'border-b border-b-gray-300': !last,
+                                        }">
+                                        {{ rep?.count ?? 0 }}
+                                    </div>
+                                    <div
+                                        class="col-span-5 text-sm font-bold p-2"
+                                        [ngClass]="{
+                                            'border-b border-b-gray-300': !last,
+                                        }">
+                                        {{ rep?.weight ?? 0 }} kg
+                                    </div>
                                 }
                             </div>
                         } @else {
-                            <p class="text-xs font-bold leading-[150%] text-zinc-500">Brak serii w ćwiczeniu</p>
+                            <p class="text-xs leading-[150%] text-zinc-600">Brak serii w ćwiczeniu</p>
                         }
                     </div>
                 </div>

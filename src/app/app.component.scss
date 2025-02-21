@@ -1,20 +1,21 @@
-
-
-.training-details__list{
+.training-details__list {
     @apply flex flex-col gap-4;
 
-    &-item{
-        &:not(:last-child){
+    &-item {
+        &:not(:last-child) {
             @apply border-b border-b-gray-200 pb-4;
         }
 
-
-        &__rep{
+        &__rep {
             @apply p-2 bg-gray-200 rounded-lg;
 
-            &--is-focus{
+            &--is-focus {
                 @apply bg-gray-900 text-white flex items-center justify-center;
             }
         }
     }
+}
+
+.red {
+    color: red;
 }

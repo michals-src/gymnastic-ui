@@ -1,18 +1,16 @@
 import { Component, ComponentFactoryResolver, inject, ViewContainerRef } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { filter, switchMap, take } from 'rxjs';
 import { IWorkout } from '@app/shared/interfaces/i-workout';
 import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
-import { BottomSheetComponent } from '@app/shared/components/bottom-sheet/bottom-sheet.component';
 import { BottomBarComponent } from '@app/shared/components/bottom-bar/bottom-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WorkoutService } from '@pages/workout-page/services/workout.service';
-import { WorkoutCreateSeriesComponent } from '@pages/workout-page/components/workout-create-series/workout-create-series.component';
 import { WorkoutDetailsViewHeader } from '@app/pages/workout-page/views/workout-details-view/workout-details-view-header.component';
-import { WorkoutExerciseSheetComponent } from '@app/pages/workout-page/sheets/workout-exercise-sheet/workout-exercise-sheet.component';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
+import { SharedHeroIconsComponent } from './shared-chart-bar.components';
 
 export interface IWorkoutResponse {
     workout: IWorkout;
@@ -64,20 +62,16 @@ export interface IWorkoutTimeline {
     templateUrl: './workout-details-view.component.html',
     styleUrl: './workout-details-view.component.scss',
     imports: [
+        NgClass,
         HeroIconsComponent,
-        BottomSheetComponent,
-        DatePipe,
-        RouterLink,
         BottomBarComponent,
         FormsModule,
         ReactiveFormsModule,
-        WorkoutCreateSeriesComponent,
         WorkoutDetailsViewHeader,
-        WorkoutExerciseSheetComponent,
+        SharedHeroIconsComponent,
     ],
 })
 export class WorkoutDetailsViewComponent {
-    private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     protected workoutService = inject(WorkoutService);
 
@@ -88,6 +82,73 @@ export class WorkoutDetailsViewComponent {
     protected overlayController = inject(OverlayControllerService);
     protected viewContainerRef = inject(ViewContainerRef);
     protected componentFactoryResolver = inject(ComponentFactoryResolver);
+
+    protected chartData = [
+        {
+            count: '12',
+            weight: '16',
+        },
+        {
+            count: '12',
+            weight: '14',
+        },
+        {
+            count: '12',
+            weight: '14',
+        },
+        {
+            count: '12',
+            weight: '14',
+        },
+        {
+            count: '12',
+            weight: '14',
+        },
+        {
+            count: '12',
+            weight: '16',
+        },
+        {
+            count: '12',
+            weight: '16',
+        },
+        {
+            count: '12',
+            weight: '16',
+        },
+        {
+            count: '12',
+            weight: '16',
+        },
+        {
+            count: '10',
+            weight: '16',
+        },
+        {
+            count: '12',
+            weight: '16',
+        },
+        {
+            count: '8',
+            weight: '20',
+        },
+        {
+            count: '8',
+            weight: '20',
+        },
+        {
+            count: '12',
+            weight: '20',
+        },
+        {
+            count: '8',
+            weight: '24',
+        },
+        {
+            count: '6',
+            weight: '24',
+        },
+    ];
 
     constructor() {
         this.activatedRoute.params.pipe(take(1)).subscribe((params) => {

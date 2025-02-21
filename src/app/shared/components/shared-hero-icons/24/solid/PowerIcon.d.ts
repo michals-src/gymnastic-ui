@@ -1,0 +1,1 @@
+export type PowerIcon = `PowerIcon`;

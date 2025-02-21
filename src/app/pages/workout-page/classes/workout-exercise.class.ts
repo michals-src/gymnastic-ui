@@ -1,8 +1,4 @@
-// declare abstract class WorkoutExercise{
-
 import { signal, WritableSignal } from '@angular/core';
-
-// }
 
 export interface IWorkoutExerciseSeries {
     count: number;

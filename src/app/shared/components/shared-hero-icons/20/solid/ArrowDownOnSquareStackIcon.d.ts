@@ -1,0 +1,1 @@
+export type ArrowDownOnSquareStackIcon = `ArrowDownOnSquareStackIcon`;
