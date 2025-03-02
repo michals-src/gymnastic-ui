@@ -2,7 +2,7 @@
     <div>
         <app-workout-view-header [workoutDetails]="workoutDetails()" />
 
-        <div class="training-details__list bg-neutral-100">
+        <div class="training-details__list flex flex-col gap-4 bg-neutral-100">
             @for (workoutExercise of workoutExercises(); track $index) {
                 <div
                     class="training-details__list-item border-b-4 border-b-white"

@@ -1,5 +1,5 @@
 <div
-    class="bottom-sheet"
+    class="bottom-sheet inset-0 fixed overflow-auto flex justify-center"
     [ngClass]="{
         'bottom-sheet--is-open': isOpened(),
         'bottom-sheet--is-touch': isTouch(),
@@ -7,10 +7,10 @@
     [ngStyle]="{
         '--bottom-sheet--touch-translateY': touchOffset() + 'px',
     }">
-    <div class="bottom-sheet__backdrop"></div>
-    <div #bottomSheetWindow class="bottom-sheet__window">
+    <div class="fixed inset-0 bottom-sheet__backdrop"></div>
+    <div #bottomSheetWindow class="p-8 flex flex-col m-auto w-full bottom-sheet__window">
         <div #bottomSheetWindowBar class="bottom-sheet__window-bar"></div>
-        <div #bottomSheetWindowContent class="bottom-sheet__window-content">
+        <div #bottomSheetWindowContent class="bg-white rounded-2xl w-full p-8 touch-pan-y">
             <ng-content></ng-content>
         </div>
     </div>

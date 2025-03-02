@@ -25,12 +25,12 @@
             @for (option of options; track $index) {
                 <div
                     (click)="onOptionClickHandler(option)"
-                    class="control-select__option"
+                    class="px-4 py-3 bg-gray-100 rounded-full flex items-center control-select__option"
                     [ngClass]="{
                         'control-select__option--is-active': option.id === _value()?.id,
                     }">
                     <p class="text-sm truncate overflow w-full">{{ option.value }}</p>
-                    <div class="control-select__option-indicator"></div>
+                    <div class="rounded-full border control-select__option-indicator"></div>
                 </div>
             }
         </div>

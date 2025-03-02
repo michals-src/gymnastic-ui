@@ -1,13 +1,1 @@
-.calendar-review {
-    @apply pb-8;
 
-    &__list {
-        @apply flex flex-col gap-4;
-
-        &-item {
-            &:not(:last-child) {
-                @apply border-b border-b-gray-200 pb-4;
-            }
-        }
-    }
-}

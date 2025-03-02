@@ -1,12 +1,12 @@
 import { Component, createComponent, EnvironmentInjector } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ExercisesService } from './shared/services/exercises.service';
 import { TestComponent } from '@app/test.component';
+import { ExercisesService } from './shared/services/exercises.service';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    templateUrl: './app.component.html',
+    template: `<router-outlet />`,
     styleUrl: './app.component.scss',
     imports: [RouterOutlet],
 })

@@ -1,6 +1,6 @@
 @if (workoutsCalendar()) {
     @for (workoutsMonth of workoutsCalendar(); track $index) {
-        <section class="calendar-review">
+        <section class="pb-8 calendar-review">
             <div class="mb-2 px-8 flex items-center gap-4">
                 <div class="">
                     <hero-icons [icon]="'calendar'" [size]="14" />
@@ -8,11 +8,11 @@
                 <p class="text-base font-bold">{{ workoutsMonth.key | date: 'LLLL' | uppercase }}</p>
             </div>
 
-            <div class="calendar-review__list bg-gray-100 p-8">
+            <div class="calendar-review__list flex flex-col gap-4 bg-gray-100 p-8">
                 @for (workout of workoutsMonth.values; track $index) {
                     <a
                         [routerLink]="[WORKOUT_PAGE_ROUTES_ENUM.DEFAULT, workout.id]"
-                        class="calendar-review__list-item flex gap-4 flex-nowrap items-center">
+                        class="calendar-review__list-item border-b border-b-gray-200 pb-4 flex gap-4 flex-nowrap items-center">
                         <div class="flex flex-col w-full">
                             <p class="text-sm font-bold leading-[150%]">
                                 {{ workout.createdAt | date: 'EEEE' | capitalize }}

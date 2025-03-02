@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -10,12 +11,11 @@ import {
     WritableSignal,
 } from '@angular/core';
 import { HeroIconsComponent } from '../../../hero-icons/hero-icons.component';
-import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'sheet-accordion-tab',
     template: `
-        <div class="sheet-accordion__tab ">
+        <div class="sheet-accordion__tab py-2">
             <a role="button" class="flex gap-4 items-center" (click)="toggleSelect()">
                 <div class="w-full text-xs leading-[150%] font-semibold text-zinc-800">
                     <ng-container

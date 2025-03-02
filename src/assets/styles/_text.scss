@@ -1,17 +1,16 @@
-.link{
-    @apply  text-sm;
+.link {
+    font-size: var(--text-sm);
     line-height: 150%;
     text-decoration: none;
-    color: var(--text-link-color, theme('textColor.gray.900'));
+    color: var(--text-link-color, var(--color-neutral-950));
 
     &:hover,
-    &:focus{
+    &:focus {
         text-decoration: underline;
-        color: var(--text-link--hover-color, var(--text-link-color, theme('textColor.gray.700')));
+        color: var(--text-link--hover-color, var(--text-link-color, var(--color-neutral-700)));
     }
 
-
-    &--light{
-        --text-link-color: theme('textColor.gray.400');
+    &--light {
+        --text-link-color: var(--color-neutral-400);
     }
 }
