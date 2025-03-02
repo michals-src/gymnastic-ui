@@ -1,16 +1,15 @@
-.control-select{
-
-    &__option{
+.control-select {
+    &__option {
         @apply px-4 py-3 bg-gray-100 rounded-full flex items-center;
 
-
-        &--is-active{
+        &--is-active {
             --control-select-option-indicator-border: 4px;
-            @apply bg-blue-100;
+            --control-select-option-indicator-color: var(--color-yellow-600);
+            @apply bg-neutral-200;
         }
 
-        &-indicator{
-            @apply rounded-full border ;
+        &-indicator {
+            @apply rounded-full border;
             width: 20px;
             height: 20px;
             position: relative;

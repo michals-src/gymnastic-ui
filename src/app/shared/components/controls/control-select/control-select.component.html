@@ -1,36 +1,37 @@
-@if(label){
-<label class="mb-2 text-xs font-semibold leading-[150%]">Partia mięśniowa</label>
-}
-<div class="flex w-full items-center gap-2 border border-gray-300 focus-within:border-gray-900 rounded-3xl p-1" (click)="onOpenHandler()">
+<div
+    class="flex w-full items-center gap-2 border border-gray-300 focus-within:border-gray-900 rounded-3xl p-1"
+    (click)="onOpenHandler()">
     <input
         readonly
         placeholder="Wybierz"
         type="text"
-        class="w-full h-[24px] pl-2 pr-0 py-0 outline-none m-0 text-xs"
+        class="w-full h-[24px] pl-4 pr-0 py-1 outline-none m-0 text-xs"
         [value]="_value()?.value" />
     <button class="button button--plain p-2">
-        <hero-icons [icon]="'chevron-down'" [size]="14" />
+        <shared-hero-icons [icon]="'ChevronDownIcon'" class="size-4" />
     </button>
 </div>
 
 <ng-template #optionsTpl>
     <app-bottom-sheet #optionsSheet (onClose)="onOptionsCloseHandler()">
-        @if(label){
-        <div class="mb-3">
-            <div class="text-sm font-semibold text-center leading-[150%]">{{ label }}</div>
+        <div class="flex justify-between items-center mb-8">
+            <button class="text-xs leading-[150%] flex items-center gap-1" (click)="clickCancel()">
+                <shared-hero-icons [icon]="'XMarkIcon'" class="size-5" />
+                <span>Anuluj</span>
+            </button>
+            <button class="font-semibold text-xs leading-[150%]" (click)="clickSave()">Zapisz</button>
         </div>
-        }
         <div class="flex flex-col gap-2">
-            @for(option of options; track $index){
-            <div
-                (click)="onOptionClickHandler(option)"
-                class="control-select__option"
-                [ngClass]="{
-                    'control-select__option--is-active': option.id === _value()?.id
-                }">
-                <p class="text-sm truncate overflow w-full">{{ option.value }}</p>
-                <div class="control-select__option-indicator"></div>
-            </div>
+            @for (option of options; track $index) {
+                <div
+                    (click)="onOptionClickHandler(option)"
+                    class="control-select__option"
+                    [ngClass]="{
+                        'control-select__option--is-active': option.id === _value()?.id,
+                    }">
+                    <p class="text-sm truncate overflow w-full">{{ option.value }}</p>
+                    <div class="control-select__option-indicator"></div>
+                </div>
             }
         </div>
     </app-bottom-sheet>

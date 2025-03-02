@@ -1,5 +1,5 @@
 .bottom-sheet {
-    @apply inset-0 fixed;
+    @apply inset-0 fixed overflow-auto flex justify-center;
 
     &--is-open {
         --bottom-sheet-backdrop-opacity: 1;
@@ -12,7 +12,7 @@
     }
 
     &__backdrop {
-        @apply absolute inset-0;
+        @apply fixed inset-0;
         background-color: rgba(0, 0, 0, 0.4);
         opacity: var(--bottom-sheet-backdrop-opacity, 0);
         transition: opacity 0.2s ease;
@@ -20,8 +20,7 @@
     }
 
     &__window {
-        @apply absolute bottom-2 inset-x-2;
-        max-height: 80vh;
+        @apply p-8 flex flex-col m-auto w-full;
         transform: translateY(var(--bottom-sheet-window-transteY, 100%));
         transition: var(--bottom-sheet-window-transition, transform 0.5s ease);
         -webkit-transition: var(--bottom-sheet-window-transition, transform 0.5s ease);
@@ -37,8 +36,7 @@
         }
 
         &-content {
-            @apply bg-white rounded-2xl w-full p-4 overflow-y-auto touch-pan-y;
-            max-height: 75vh;
+            @apply bg-white rounded-2xl w-full p-8 touch-pan-y;
         }
     }
 }

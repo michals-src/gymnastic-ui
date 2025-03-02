@@ -1,14 +1,21 @@
-import { ChangeDetectionStrategy, Component, Input, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { HeroIconsComponent } from '../../hero-icons/hero-icons.component';
-import { ControlValueAccessor } from '@angular/forms';
-import { WritableSignal } from '@angular/core';
-import { signal } from '@angular/core';
-import { Optional } from '@angular/core';
-import { NgModel } from '@angular/forms';
-import { BottomSheetComponent } from '../../bottom-sheet/bottom-sheet.component';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { NgClass } from '@angular/common';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    Optional,
+    Self,
+    signal,
+    TemplateRef,
+    ViewChild,
+    ViewContainerRef,
+    WritableSignal,
+} from '@angular/core';
+import { ControlValueAccessor, NgModel } from '@angular/forms';
+import { BottomSheetComponent } from '../../bottom-sheet/bottom-sheet.component';
+import { SharedHeroIconsComponent } from '../../shared-hero-icons/shared-hero-icons.component';
 
 export interface IControlSelectOption {
     id: string;
@@ -18,13 +25,12 @@ export interface IControlSelectOption {
 @Component({
     selector: 'app-control-select',
     standalone: true,
-    imports: [HeroIconsComponent, BottomSheetComponent, NgClass],
+    imports: [BottomSheetComponent, NgClass, SharedHeroIconsComponent],
     templateUrl: './control-select.component.html',
     styleUrl: './control-select.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlSelectComponent implements ControlValueAccessor {
-    @Input() label: string = null;
     @Input() options: IControlSelectOption[] = [];
     @Input() set disabled(value: boolean) {
         if (!this?.ngModel?.disabled) this._disabled.set(value);
@@ -32,7 +38,6 @@ export class ControlSelectComponent implements ControlValueAccessor {
 
     protected _value: WritableSignal<IControlSelectOption> = signal(null);
     protected _disabled: WritableSignal<boolean> = signal(null);
-    protected _isOpen: WritableSignal<boolean> = signal(false);
 
     protected onChange = (value: any) => {};
     protected onTouched = () => {};
@@ -42,14 +47,17 @@ export class ControlSelectComponent implements ControlValueAccessor {
     @ViewChild('optionsTpl') protected optionsTpl: TemplateRef<any>;
     @ViewChild('optionsSheet') protected optionsSheet: BottomSheetComponent;
 
-    constructor(@Self() @Optional() private ngModel: NgModel, protected overlay: Overlay, protected viewContainerRef: ViewContainerRef) {
+    constructor(
+        @Self() @Optional() private ngModel: NgModel,
+        protected overlay: Overlay,
+        protected viewContainerRef: ViewContainerRef
+    ) {
         if (this.ngModel) {
             this.ngModel.valueAccessor = this;
         }
     }
 
     writeValue(value: IControlSelectOption): void {
-        this._value.set(value);
         this.onChange(value);
     }
 
@@ -75,11 +83,15 @@ export class ControlSelectComponent implements ControlValueAccessor {
     }
 
     protected onOptionClickHandler(option: IControlSelectOption) {
-        this.writeValue(option);
-        this.optionsSheet.onCloseHandler();
+        this._value.set(option);
     }
 
-    protected setIsOpen(value: boolean): void {
-        this._isOpen.set(value);
+    protected clickCancel(): void {
+        this.onOptionsCloseHandler();
+    }
+
+    protected clickSave(): void {
+        this.writeValue(this._value());
+        this.onOptionsCloseHandler();
     }
 }

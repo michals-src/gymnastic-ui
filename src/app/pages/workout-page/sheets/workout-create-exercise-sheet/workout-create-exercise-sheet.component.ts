@@ -1,3 +1,4 @@
+import { JsonPipe, NgClass } from '@angular/common';
 import {
     Component,
     computed,
@@ -10,18 +11,17 @@ import {
     ViewChild,
     WritableSignal,
 } from '@angular/core';
-import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
+import { FormsModule } from '@angular/forms';
 import { BottomSheetComponent } from '@app/shared/components/bottom-sheet/bottom-sheet.component';
 import {
     ControlSelectComponent,
     IControlSelectOption,
 } from '@app/shared/components/controls/control-select/control-select.component';
+import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
+import { ApiService } from '@app/shared/services/api.service';
 import { ExercisesService } from '@app/shared/services/exercises.service';
-import { FormsModule } from '@angular/forms';
-import { JsonPipe, NgClass } from '@angular/common';
 import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
 import { WorkoutService } from '../../services/workout.service';
-import { ApiService } from '@app/shared/services/api.service';
 
 @Component({
     selector: 'app-workout-create-exercise-sheet',
@@ -82,6 +82,6 @@ export class WorkoutCreateExerciseSheetComponent {
     }
 
     private close(): void {
-        this.addWorkoutExerciseBottomSheet.onCloseHandler();
+        // this.addWorkoutExerciseBottomSheet.onCloseHandler();
     }
 }

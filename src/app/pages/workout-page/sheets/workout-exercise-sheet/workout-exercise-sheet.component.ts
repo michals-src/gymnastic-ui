@@ -1,3 +1,5 @@
+import { Overlay } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { NgClass } from '@angular/common';
 import {
     Component,
@@ -12,18 +14,16 @@ import {
     ViewContainerRef,
     WritableSignal,
 } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IWorkoutExerciseSeries } from '@app/pages/workout-page/classes/workout-exercise.class';
 import { WorkoutService } from '@app/pages/workout-page/services/workout.service';
 import { BottomSheetComponent } from '@app/shared/components/bottom-sheet/bottom-sheet.component';
-import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
-import { filter, map, take } from 'rxjs';
 import { SheetAccordionComponent } from '@app/shared/components/bottom-sheet/components/sheet-accordion/sheet-accordion.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SheetAccordionTabComponent } from '../../../../shared/components/bottom-sheet/components/sheet-accordion/sheet-accordion-tab.component';
-import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
-import { IWorkoutExerciseSeries } from '@app/pages/workout-page/classes/workout-exercise.class';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { Overlay } from '@angular/cdk/overlay';
+import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
 import { ExercisesService } from '@app/shared/services/exercises.service';
+import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
+import { filter, map } from 'rxjs';
+import { SheetAccordionTabComponent } from '../../../../shared/components/bottom-sheet/components/sheet-accordion/sheet-accordion-tab.component';
 
 @Component({
     selector: 'app-workout-exercise-sheet',
@@ -143,22 +143,22 @@ export class WorkoutExerciseSheetComponent {
     }
 
     protected clickCancel(): void {
-        this.workoutExerciseEditSheet
-            .onCloseHandler()
-            .pipe(take(1))
-            .subscribe(() => {
-                this.onClose.emit('cancel');
-            });
+        // this.workoutExerciseEditSheet
+        //     .onCloseHandler()
+        //     .pipe(take(1))
+        //     .subscribe(() => {
+        //         this.onClose.emit('cancel');
+        //     });
     }
 
     protected clickSave(): void {
         this.selectedWorkoutExercise().setSeries(this.exerciseSeries());
-        this.workoutExerciseEditSheet
-            .onCloseHandler()
-            .pipe(take(1))
-            .subscribe(() => {
-                this.onClose.emit('save');
-            });
+        // this.workoutExerciseEditSheet
+        //     .onCloseHandler()
+        //     .pipe(take(1))
+        //     .subscribe(() => {
+        //         this.onClose.emit('save');
+        //     });
     }
 
     protected closeBottomSheet(): void {

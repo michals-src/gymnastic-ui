@@ -5,7 +5,7 @@ import { ApiService } from '@app/shared/services/api.service';
     providedIn: 'root',
 })
 export class ExercisesService {
-    private _exercises: WritableSignal<any> = signal(null);
+    private _exercises: WritableSignal<any> = signal(new Map());
     public exercises = this._exercises.asReadonly();
 
     constructor(private apiService: ApiService) {}
