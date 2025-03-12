@@ -8,21 +8,17 @@ import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet
     standalone: true,
     template: `
         <div class="w-full">
-            <div class="flex gap-2 justify-between">
-                <p class="text-sm leading-[150%] mb-2">{{ dataSource.name }}</p>
+            <div class="flex items-center gap-2 justify-between">
+                <p class="w-full text-sm leading-[150%]">{{ dataSource.name }}</p>
+                <div
+                    class="px-2 h-[32px] inline-flex justify-center items-center rounded-md text-xs font-bold text-white bg-yellow-700">
+                    {{ dataSource.series()?.length || 0 }}
+                </div>
                 <button
                     (click)="togglePreview()"
                     class="px-2 bg-gray-200 rounded-md h-[32px] text-gray-600 text-xs font-semibold flex gap-2 items-center">
                     <shared-hero-icons [format]="'outline'" [icon]="'EyeIcon'" class="size-4" />
                 </button>
-            </div>
-
-            <div class="flex gap-2 items-center pt-2 border-t border-t-gray-200">
-                <div
-                    class="px-2 h-[24px] inline-flex justify-center items-center rounded-md text-xs font-bold text-white bg-yellow-700">
-                    {{ dataSource.series()?.length || 0 }}
-                </div>
-
                 <button
                     (click)="toggleMoreActions()"
                     class="ml-auto px-2 h-[32px] text-gray-600 text-xs font-semibold flex gap-2 items-center">
@@ -47,12 +43,22 @@ import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet
                     </div>
 
                     <div class="flex flex-col gap-2">
-                        @for (set of dataSource.series(); track $index; let isEven = $even) {
+                        @for (set of dataSource.series(); track idx; let isEven = $even, idx = $index) {
                             <div
                                 [class.bg-gray-200]="isEven"
-                                class="px-4 py-3 text-gray-800 text-xs rounded-2xl grid grid-cols-8">
-                                <p class="col-span-6 text-xs leading-[150%]">{{ set.count }} powtórzeń</p>
-                                <p class="col-span-2 text-xs leading-[150%] text-right">{{ set.weight }} kg</p>
+                                class="px-4 py-2 text-gray-800 text-xs rounded-2xl grid grid-cols-12">
+                                <p class="col-span-2 text-xs leading-[150%]">{{ idx + 1 }} set</p>
+                                <div class="col-span-8 pr-3 border-r border-r-gray-300">
+                                    <p class=" text-xs leading-[150%] text-right">
+                                        <span class="font-semibold">{{ set.count }}</span>
+                                        powtórzeń
+                                    </p>
+                                </div>
+
+                                <p class="col-span-2 text-xs leading-[150%] text-right">
+                                    <span class="font-semibold">{{ set.weight }}</span>
+                                    kg
+                                </p>
                             </div>
                         } @empty {
                             <div class="py-8 flex items-center justify-center gap-2">

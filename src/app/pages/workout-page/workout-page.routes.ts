@@ -7,6 +7,7 @@ import { WorkoutService } from './services/workout.service';
 export enum WORKOUT_PAGE_ROUTES_ENUM {
     DEFAULT = `workout`,
     DETAILS_ID = `:id`,
+    EXERCISE_DETAILS_ID = `:exerciseId`,
     CREATE = 'create',
     ADMIN = 'admin',
 }
@@ -23,6 +24,10 @@ export const WORKOUT_PAGE_ROUTES: Routes = [
             },
             {
                 path: `${WORKOUT_PAGE_ROUTES_ENUM.DETAILS_ID}`,
+                component: WorkoutDetailsViewComponent,
+            },
+            {
+                path: `${WORKOUT_PAGE_ROUTES_ENUM.DETAILS_ID}/${WORKOUT_PAGE_ROUTES_ENUM.EXERCISE_DETAILS_ID}`,
                 component: WorkoutDetailsViewComponent,
             },
         ],

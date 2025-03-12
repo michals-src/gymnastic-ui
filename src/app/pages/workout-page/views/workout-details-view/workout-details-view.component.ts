@@ -67,7 +67,7 @@ export interface IWorkoutTimeline {
     selector: 'app-workout-details-view',
     standalone: true,
     templateUrl: './workout-details-view.component.html',
-    styleUrl: './workout-details-view.component.scss',
+    styleUrls: [],
     imports: [
         HeroIconsComponent,
         BottomBarComponent,

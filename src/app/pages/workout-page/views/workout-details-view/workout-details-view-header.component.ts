@@ -18,12 +18,14 @@ import { CapitalizePipe } from '@app/shared/pipes/capitalize.pipe';
         <section class="pt-4 px-8 pb-4">
             <div class="mb-4 flex gap-4 items-center">
                 <shared-hero-icons [icon]="'CalendarIcon'" class="size-6" />
-                <p class="font-bold col-start-2 leading-[130%] text-2xl">
-                    {{ workoutDetails?.createdAt | date: 'EEEE' }}
-                </p>
-                <p class="col-start-2 leading-[130%]">
-                    {{ workoutDetails?.createdAt | date: 'dd MMMM' }}
-                </p>
+                <div class="flex w-full gap-2 items-end">
+                    <p class="font-bold col-start-2 leading-[130%] text-2xl">
+                        {{ workoutDetails?.createdAt | date: 'EEEE' }}
+                    </p>
+                    <p class="col-start-2 font-semibold leading-[150%]">
+                        {{ workoutDetails?.createdAt | date: 'dd MMMM' }}
+                    </p>
+                </div>
                 <!-- <div>
                     <button
                         role="button"
