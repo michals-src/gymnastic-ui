@@ -1,5 +1,12 @@
-import { Component, ComponentFactoryResolver, inject, ViewContainerRef } from '@angular/core';
-import { NgClass } from '@angular/common';
+import {
+    Component,
+    ComponentFactoryResolver,
+    computed,
+    inject,
+    signal,
+    ViewContainerRef,
+    WritableSignal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, switchMap, take } from 'rxjs';
 import { IWorkout } from '@app/shared/interfaces/i-workout';
@@ -10,7 +17,7 @@ import { WorkoutService } from '@pages/workout-page/services/workout.service';
 import { WorkoutDetailsViewHeader } from '@app/pages/workout-page/views/workout-details-view/workout-details-view-header.component';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
-import { SharedHeroIconsComponent } from './shared-chart-bar.components';
+import { WorkoutDetailsViewExercise } from '@app/pages/workout-page/views/workout-details-view/workout-details-view-exercise.components';
 
 export interface IWorkoutResponse {
     workout: IWorkout;
@@ -62,13 +69,12 @@ export interface IWorkoutTimeline {
     templateUrl: './workout-details-view.component.html',
     styleUrl: './workout-details-view.component.scss',
     imports: [
-        NgClass,
         HeroIconsComponent,
         BottomBarComponent,
         FormsModule,
         ReactiveFormsModule,
         WorkoutDetailsViewHeader,
-        SharedHeroIconsComponent,
+        WorkoutDetailsViewExercise,
     ],
 })
 export class WorkoutDetailsViewComponent {
@@ -77,7 +83,23 @@ export class WorkoutDetailsViewComponent {
 
     protected workoutId = this.workoutService.workoutId;
     protected workoutDetails = this.workoutService.workoutDetails;
-    protected workoutExercises = this.workoutService.workoutExercises;
+    protected workoutExercises = computed(() => {
+        const exercises = this.workoutService.workoutExercises() || [];
+        return exercises.reduce((_exercises, _exercise) => {
+            const _group = _exercises.find((g) => g?.key === _exercise.group) || null;
+
+            if (!_group) {
+                _exercises.push({
+                    key: _exercise.group,
+                    values: [_exercise],
+                });
+            } else {
+                _group.values.push(_exercise);
+            }
+
+            return _exercises;
+        }, []);
+    });
 
     protected overlayController = inject(OverlayControllerService);
     protected viewContainerRef = inject(ViewContainerRef);
@@ -150,11 +172,11 @@ export class WorkoutDetailsViewComponent {
         },
     ];
 
+    protected expadedTabId: WritableSignal<number> = signal(null);
+
     constructor() {
-        this.activatedRoute.params.pipe(take(1)).subscribe((params) => {
-            const id = params?.['id'] || null;
-            if (id) this.workoutService.setWorkoutId(id);
-        });
+        const id = this.activatedRoute.snapshot.params?.['id'] || null;
+        this.workoutService.setWorkoutId(id);
     }
     ngOnInit(): void {
         if (this.workoutId()) this.workoutService.getWorkout();
@@ -220,5 +242,14 @@ export class WorkoutDetailsViewComponent {
             .updateExercise()
             .pipe(filter((res) => !!res))
             .subscribe();
+    }
+
+    protected clickExpandTab(id: number): void {
+        this.expadedTabId.update((state) => {
+            if (id === state) {
+                return null;
+            }
+            return id;
+        });
     }
 }

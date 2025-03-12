@@ -2,63 +2,16 @@
     <div>
         <app-workout-view-header [workoutDetails]="workoutDetails()" />
 
-        <div class="training-details__list flex flex-col gap-4 bg-neutral-100">
+        <div class="flex flex-col gap-8 px-6">
             @for (workoutExercise of workoutExercises(); track $index) {
-                <div
-                    class="training-details__list-item border-b-4 border-b-white"
-                    (click)="onWorkoutExerciseClickHandler(workoutExercise.id)">
-                    <div class="flex items-center gap-2 px-8 py-4">
-                        <div>
-                            <p class="text-xs text-gray-600">{{ workoutExercise.group }}</p>
-                            <p class="text-sm font-bold leading-[130%]">{{ workoutExercise.name }}</p>
-                        </div>
+                <div>
+                    <div class="mb-2 flex items-center gap-2 px-8 py-3 bg-gray-400 text-white rounded-2xl">
+                        <p class="font-bold leading-[130%] text-xs">{{ workoutExercise.key }}</p>
                     </div>
 
-                    <div class="w-full bg-gray-200 p-8">
-                        @if (workoutExercise.series()?.length) {
-                            <app-shared-chart-bar
-                                [data]="chartData"
-                                [x]="'weight'"
-                                [y]="'count'"
-                                [axisX]="axisX"
-                                [axisX]="axisY">
-                                <ng-template #axisX let-data>
-                                    {{ data?.weight }}
-                                </ng-template>
-                                <ng-template #axisY let-data>
-                                    {{ data?.count }}
-                                </ng-template>
-                            </app-shared-chart-bar>
-                            <div class="grid grid-cols-12 items-center">
-                                <div class="col-span-3 text-sm p-2 text-zinc-600">Seria</div>
-                                <div class="col-span-4 text-sm p-2 text-zinc-600">Ilość</div>
-                                <div class="col-span-5 text-sm p-2 text-zinc-600">Ciężar</div>
-                                @for (rep of workoutExercise.series(); track idx; let last = $last, idx = $index) {
-                                    <div
-                                        class="col-span-3 text-sm p-2 text-zinc-600"
-                                        [ngClass]="{
-                                            'border-b border-b-gray-300': !last,
-                                        }">
-                                        {{ idx + 1 }}
-                                    </div>
-                                    <div
-                                        class="col-span-4 text-sm font-bold p-2"
-                                        [ngClass]="{
-                                            'border-b border-b-gray-300': !last,
-                                        }">
-                                        {{ rep?.count ?? 0 }}
-                                    </div>
-                                    <div
-                                        class="col-span-5 text-sm font-bold p-2"
-                                        [ngClass]="{
-                                            'border-b border-b-gray-300': !last,
-                                        }">
-                                        {{ rep?.weight ?? 0 }} kg
-                                    </div>
-                                }
-                            </div>
-                        } @else {
-                            <p class="text-xs leading-[150%] text-zinc-600">Brak serii w ćwiczeniu</p>
+                    <div class="bg-gray-100 rounded-2xl p-8 flex flex-col gap-8">
+                        @for (exercise of workoutExercise.values; track $index) {
+                            <workout-details-view-exercise [dataSource]="exercise" />
                         }
                     </div>
                 </div>

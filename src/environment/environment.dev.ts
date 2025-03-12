@@ -1,3 +1,3 @@
 export const environment = {
-    api_url: 'http://127.0.0.1:8787',
+    api_url: 'http://10.0.0.18:8787',
 };

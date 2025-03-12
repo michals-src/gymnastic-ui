@@ -75,7 +75,11 @@ export class ControlSelectComponent implements ControlValueAccessor {
 
     protected onOpenHandler(): void {
         this.overlayRef = this.overlay.create();
-        this.overlayRef.attach(new TemplatePortal(this.optionsTpl, this.viewContainerRef));
+        this.overlayRef.attach(
+            new TemplatePortal(this.optionsTpl, this.viewContainerRef, {
+                options: this.options,
+            })
+        );
     }
 
     protected onOptionsCloseHandler(): void {

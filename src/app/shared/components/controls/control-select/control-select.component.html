@@ -1,38 +1,50 @@
 <div
-    class="flex w-full items-center gap-2 border border-gray-300 focus-within:border-gray-900 rounded-3xl p-1"
-    (click)="onOpenHandler()">
+    class="flex w-full items-center gap-2 outline -outline-offset-1 outline-neutral-300 focus-within:outline-yellow-600 rounded-xl px-4 py-2"
+    [ngClass]="{
+        'bg-neutral-100 text-neutral-400': _disabled(),
+        'outline-2 outline-yellow-600 -outline-offset-2': _value()?.value,
+    }"
+    (click)="!_disabled() && onOpenHandler()">
     <input
         readonly
         placeholder="Wybierz"
         type="text"
-        class="w-full h-[24px] pl-4 pr-0 py-1 outline-none m-0 text-xs"
+        class="w-full h-[20px] outline-none m-0 text-sm"
+        [disabled]="_disabled()"
         [value]="_value()?.value" />
-    <button class="button button--plain p-2">
+    <button role="button" class="button button--plain">
         <shared-hero-icons [icon]="'ChevronDownIcon'" class="size-4" />
     </button>
 </div>
 
-<ng-template #optionsTpl>
+<ng-template #optionsTpl let-options="options">
     <app-bottom-sheet #optionsSheet (onClose)="onOptionsCloseHandler()">
-        <div class="flex justify-between items-center mb-8">
-            <button class="text-xs leading-[150%] flex items-center gap-1" (click)="clickCancel()">
-                <shared-hero-icons [icon]="'XMarkIcon'" class="size-5" />
-                <span>Anuluj</span>
-            </button>
-            <button class="font-semibold text-xs leading-[150%]" (click)="clickSave()">Zapisz</button>
-        </div>
         <div class="flex flex-col gap-2">
-            @for (option of options; track $index) {
+            @for (option of options; track option) {
                 <div
                     (click)="onOptionClickHandler(option)"
-                    class="px-4 py-3 bg-gray-100 rounded-full flex items-center control-select__option"
+                    class="px-4 py-3 bg-gray-100 rounded-xl flex gap-2 items-center"
                     [ngClass]="{
-                        'control-select__option--is-active': option.id === _value()?.id,
+                        'bg-yellow-700 text-white': option.id === _value()?.id,
                     }">
-                    <p class="text-sm truncate overflow w-full">{{ option.value }}</p>
-                    <div class="rounded-full border control-select__option-indicator"></div>
+                    <p class="text-sm w-full">{{ option.value }}</p>
+                    <div
+                        class="outline-2 -outline-offset-2 outline-neutral-800 w-[20px] h-[20px] rounded-full aspect-square relative"
+                        [ngClass]="{
+                            'bg-white outline-white': option.id === _value()?.id,
+                        }"></div>
                 </div>
             }
+        </div>
+        <div class="flex justify-between items-center mt-8 px-4">
+            <button class="text-xs leading-[150%] flex items-center gap-1" (click)="clickCancel()">
+                <span>Anuluj</span>
+            </button>
+            <button
+                class="px-4 py-2 rounded-xl bg-black text-white font-semibold text-xs leading-[150%]"
+                (click)="clickSave()">
+                Zapisz
+            </button>
         </div>
     </app-bottom-sheet>
 </ng-template>
