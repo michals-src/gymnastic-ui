@@ -11,16 +11,14 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ApiService } from '@app/shared/services/api.service';
-import { ExercisesService } from '@app/shared/services/exercises.service';
 import {
     ControlSelectComponent,
     IControlSelectOption,
-} from '../../../../shared/components/controls/control-select/control-select.component';
-import { HeroIconsComponent } from '../../../../shared/components/hero-icons/hero-icons.component';
-import { OverlayControllerService } from '../../../../shared/services/overlay-controller.service';
-import { WorkoutService } from '../../services/workout.service';
-import { SharedHeroIconsComponent } from '../../../../shared/components/shared-hero-icons/shared-hero-icons.component';
+} from '@app/shared/components/controls/control-select/control-select.component';
+import { ApiService } from '@app/shared/services/api.service';
+import { ExercisesService } from '@app/shared/services/exercises.service';
+import { SharedHeroIconsComponent } from '../../../shared/components/shared-hero-icons/shared-hero-icons.component';
+import { WorkoutService } from '../services/workout.service';
 
 @Component({
     selector: 'app-workout-create-view',
@@ -31,7 +29,7 @@ import { SharedHeroIconsComponent } from '../../../../shared/components/shared-h
                 Powrót
             </a>
             <div class="flex flex-col gap-4">
-                <hero-icons [icon]="'rocket-launch'" [size]="48" />
+                <shared-hero-icons [icon]="'RocketLaunchIcon'" class="size-5" />
                 <h1 class="text-3xl font-bold leading-[130%]r">Tworzenie sesji treningowej</h1>
                 <h1 class="text-base leading-[150%] ">Dodaj pierwsze ćwiczenie<br />dzisiejszego planu</h1>
             </div>
@@ -51,14 +49,15 @@ import { SharedHeroIconsComponent } from '../../../../shared/components/shared-h
                     [disabled]="!selectedMuscle()" />
             </div>
             <button
+                (click)="clickCreateWorkout()"
                 class="px-4 py-3 rounded-xl bg-black text-white font-bold text-sm flex items-center justify-center gap-2">
                 <shared-hero-icons [icon]="'PlusCircleIcon'" class="size-5" />
                 Utwórz
             </button>
         </div>
     `,
-    styleUrl: './workout-create-view.component.scss',
-    imports: [RouterModule, FormsModule, HeroIconsComponent, ControlSelectComponent, SharedHeroIconsComponent]
+    styleUrls: [],
+    imports: [RouterModule, FormsModule, SharedHeroIconsComponent, ControlSelectComponent],
 })
 export class WorkoutCreateViewComponent {
     protected overlay = inject(Overlay);
@@ -69,8 +68,6 @@ export class WorkoutCreateViewComponent {
     protected workoutService = inject(WorkoutService);
 
     protected exercisesService = inject(ExercisesService);
-
-    protected overlayController = inject(OverlayControllerService);
 
     protected selectedMuscle: WritableSignal<IControlSelectOption> = signal(null);
     protected selectedExercise: WritableSignal<number> = signal(null);
@@ -90,48 +87,12 @@ export class WorkoutCreateViewComponent {
     });
 
     protected selectMuscle(value: IControlSelectOption): void {
-        console.log(this.exercisesCollection().get(value?.id));
         this.selectedMuscle.set(value);
     }
 
     protected selectExercise(value: IControlSelectOption): void {
-        console.log(value);
         this.selectedExercise.set(+value.id);
     }
 
-    public ngOnInit(): void {
-        // this.apiService.post('/workouts', {}).subscribe((id: number) => {
-        //     if (!id) {
-        //         this.router.navigate(['/']);
-        //     } else {
-        //         this.workoutService.setWorkoutId(id);
-        //         import('../../sheets/workout-create-exercise-sheet/workout-create-exercise-sheet.component').then(
-        //             ({ WorkoutCreateExerciseSheetComponent }) => {
-        //                 const reference = this.overlayController.open(
-        //                     'WorkoutCreateExerciseSheetComponent',
-        //                     new ComponentPortal(
-        //                         WorkoutCreateExerciseSheetComponent,
-        //                         this.viewContainerRef,
-        //                         this.viewContainerRef.injector,
-        //                         this.componentFactoryResolver
-        //                     )
-        //                 );
-        //                 reference.instance.onCreate.subscribe((exerciseId) => {
-        //                     this.workoutService
-        //                         .createExercise(exerciseId)
-        //                         .pipe(filter((id) => !!id))
-        //                         .subscribe(() => {
-        //                             this.overlayController.close('WorkoutCreateExerciseSheetComponent');
-        //                         });
-        //                 });
-        //                 reference.close.subscribe(() => {
-        //                     this.router.navigate(['/', WORKOUT_PAGE_ROUTES_ENUM.DEFAULT, id], {
-        //                         queryParams: { editable: true },
-        //                     });
-        //                 });
-        //             }
-        //         );
-        //     }
-        // });
-    }
+    protected clickCreateWorkout(): void {}
 }

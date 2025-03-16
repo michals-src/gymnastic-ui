@@ -2,10 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedHeroIconsComponent } from '@app/shared/components/shared-hero-icons/shared-hero-icons.component';
-import { CapitalizePipe } from '@app/shared/pipes/capitalize.pipe';
 
 @Component({
-    selector: 'app-workout-view-header',
+    selector: 'app-workout-header',
     template: `
         <section class="pt-12 px-8 bg-white sticky top-0">
             <a [routerLink]="['/']" class="block">
@@ -37,7 +36,7 @@ import { CapitalizePipe } from '@app/shared/pipes/capitalize.pipe';
         </section>
     `,
     styleUrls: [],
-    imports: [RouterModule, SharedHeroIconsComponent, CapitalizePipe, DatePipe]
+    imports: [RouterModule, SharedHeroIconsComponent, DatePipe],
 })
 export class WorkoutDetailsViewHeader {
     @Input() workoutDetails: any = null;

@@ -1,4 +1,3 @@
-import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -9,11 +8,9 @@ import {
     ViewEncapsulation,
     WritableSignal,
 } from '@angular/core';
-import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons.component';
 
 @Component({
     selector: 'sheet-accordion',
-    imports: [HeroIconsComponent, NgTemplateOutlet, NgComponentOutlet],
     template: `
         <div class="sheet-accordion px-4 bg-zinc-100 rounded-xl">
             <ng-content />
@@ -21,7 +18,7 @@ import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons
     `,
     styleUrl: './sheet-accordion.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class SheetAccordionComponent {
     @ContentChildren(SheetAccordionComponent, { descendants: true })

@@ -1,4 +1,4 @@
-import { JsonPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
     Component,
     computed,
@@ -27,7 +27,7 @@ import { WorkoutService } from '../../services/workout.service';
     selector: 'app-workout-create-exercise-sheet',
     templateUrl: './workout-create-exercise-sheet.component.html',
     styleUrl: './workout-create-exercise-sheet.component.scss',
-    imports: [HeroIconsComponent, BottomSheetComponent, ControlSelectComponent, FormsModule, JsonPipe, NgClass]
+    imports: [HeroIconsComponent, BottomSheetComponent, ControlSelectComponent, FormsModule, NgClass],
 })
 export class WorkoutCreateExerciseSheetComponent {
     protected apiService = inject(ApiService);

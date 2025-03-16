@@ -99,7 +99,7 @@ const PADDING = 12;
         class: 'w-full h-[100px] flex text-green-500',
     },
 })
-export class SharedHeroIconsComponent {
+export class SharedChartComponent {
     private readonly elementRef = inject(ElementRef);
 
     public readonly data: InputSignal<Array<Record<string, number>>> = input();

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, signal, WritableSignal } from '@angular/core';
 import { WorkoutExercise } from '@app/pages/workout-page/classes/workout-exercise.class';
-import { SharedHeroIconsComponent } from '../../../../shared/components/shared-hero-icons/shared-hero-icons.component';
 import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet/bottom-sheet.component';
+import { SharedHeroIconsComponent } from '../../../../shared/components/shared-hero-icons/shared-hero-icons.component';
 
 @Component({
-    selector: 'workout-details-view-exercise',
+    selector: 'app-workout-exercise',
     template: `
         <div class="w-full">
             <div class="flex items-center gap-2 justify-between">
@@ -95,9 +95,9 @@ import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet
     `,
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [SharedHeroIconsComponent, BottomSheetComponent]
+    imports: [SharedHeroIconsComponent, BottomSheetComponent],
 })
-export class WorkoutDetailsViewExercise {
+export class WorkoutExerciseComponent {
     @Input() dataSource: WorkoutExercise;
 
     private _preview: WritableSignal<boolean> = signal(false);
