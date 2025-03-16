@@ -24,11 +24,10 @@ export interface IControlSelectOption {
 
 @Component({
     selector: 'app-control-select',
-    standalone: true,
     imports: [BottomSheetComponent, NgClass, SharedHeroIconsComponent],
     templateUrl: './control-select.component.html',
     styleUrl: './control-select.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSelectComponent implements ControlValueAccessor {
     @Input() options: IControlSelectOption[] = [];

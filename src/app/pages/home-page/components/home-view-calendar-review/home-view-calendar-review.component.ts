@@ -10,10 +10,9 @@ import { getISOWithOffset } from '@app/shared/functions/get-iso-with-offset';
 
 @Component({
     selector: 'app-home-view-calendar-review',
-    standalone: true,
     templateUrl: './home-view-calendar-review.component.html',
     styleUrl: './home-view-calendar-review.component.scss',
-    imports: [CapitalizePipe, HeroIconsComponent, RouterModule, DatePipe, UpperCasePipe],
+    imports: [CapitalizePipe, HeroIconsComponent, RouterModule, DatePipe, UpperCasePipe]
 })
 export class HomeViewCalendarReviewComponent {
     private apiService = inject(ApiService);

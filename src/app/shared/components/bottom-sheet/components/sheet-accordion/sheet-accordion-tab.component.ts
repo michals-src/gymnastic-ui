@@ -40,10 +40,9 @@ import { HeroIconsComponent } from '../../../hero-icons/hero-icons.component';
         </div>
     `,
     styleUrls: [],
-    standalone: true,
     imports: [HeroIconsComponent, NgTemplateOutlet],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class SheetAccordionTabComponent {
     @Input() header: string = null;

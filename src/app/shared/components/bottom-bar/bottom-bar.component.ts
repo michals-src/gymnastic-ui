@@ -14,11 +14,10 @@ import {
 
 @Component({
     selector: 'app-bottom-bar',
-    standalone: true,
     imports: [],
     templateUrl: './bottom-bar.component.html',
     styleUrl: './bottom-bar.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BottomBarComponent {
     private overlay = inject(Overlay);

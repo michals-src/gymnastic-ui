@@ -13,7 +13,6 @@ import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons
 
 @Component({
     selector: 'sheet-accordion',
-    standalone: true,
     imports: [HeroIconsComponent, NgTemplateOutlet, NgComponentOutlet],
     template: `
         <div class="sheet-accordion px-4 bg-zinc-100 rounded-xl">
@@ -22,7 +21,7 @@ import { HeroIconsComponent } from '@app/shared/components/hero-icons/hero-icons
     `,
     styleUrl: './sheet-accordion.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class SheetAccordionComponent {
     @ContentChildren(SheetAccordionComponent, { descendants: true })

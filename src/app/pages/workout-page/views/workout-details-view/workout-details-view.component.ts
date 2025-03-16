@@ -65,7 +65,6 @@ export interface IWorkoutTimeline {
 
 @Component({
     selector: 'app-workout-details-view',
-    standalone: true,
     templateUrl: './workout-details-view.component.html',
     styleUrls: [],
     imports: [
@@ -75,7 +74,7 @@ export interface IWorkoutTimeline {
         ReactiveFormsModule,
         WorkoutDetailsViewHeader,
         WorkoutDetailsViewExercise,
-    ],
+    ]
 })
 export class WorkoutDetailsViewComponent {
     private activatedRoute = inject(ActivatedRoute);

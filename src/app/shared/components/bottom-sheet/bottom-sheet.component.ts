@@ -3,10 +3,9 @@ import { Component, EventEmitter, Output, Renderer2, WritableSignal, signal } fr
 
 @Component({
     selector: 'app-bottom-sheet',
-    standalone: true,
     imports: [NgClass, NgStyle],
     templateUrl: './bottom-sheet.component.html',
-    styleUrl: './bottom-sheet.component.scss',
+    styleUrl: './bottom-sheet.component.scss'
 })
 export class BottomSheetComponent {
     @Output() onClose: EventEmitter<void> = new EventEmitter();

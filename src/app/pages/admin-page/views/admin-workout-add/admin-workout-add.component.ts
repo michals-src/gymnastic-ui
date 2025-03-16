@@ -8,12 +8,11 @@ import { delay } from 'rxjs';
 
 @Component({
     selector: 'app-admin-workout-add',
-    standalone: true,
     imports: [ReactiveFormsModule, HttpClientModule, HeroIconsComponent, JsonPipe],
     templateUrl: './admin-workout-add.component.html',
     styleUrl: './admin-workout-add.component.scss',
     providers: [HttpClient],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminWorkoutAddComponent {
     _exercises: WritableSignal<any> = signal(null);

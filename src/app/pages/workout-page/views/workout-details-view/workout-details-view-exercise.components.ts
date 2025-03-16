@@ -5,7 +5,6 @@ import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet
 
 @Component({
     selector: 'workout-details-view-exercise',
-    standalone: true,
     template: `
         <div class="w-full">
             <div class="flex items-center gap-2 justify-between">
@@ -96,7 +95,7 @@ import { BottomSheetComponent } from '../../../../shared/components/bottom-sheet
     `,
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [SharedHeroIconsComponent, BottomSheetComponent],
+    imports: [SharedHeroIconsComponent, BottomSheetComponent]
 })
 export class WorkoutDetailsViewExercise {
     @Input() dataSource: WorkoutExercise;

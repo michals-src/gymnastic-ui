@@ -27,7 +27,6 @@ import { SheetAccordionTabComponent } from '../../../../shared/components/bottom
 
 @Component({
     selector: 'app-workout-exercise-sheet',
-    standalone: true,
     imports: [
         BottomSheetComponent,
         HeroIconsComponent,
@@ -38,7 +37,7 @@ import { SheetAccordionTabComponent } from '../../../../shared/components/bottom
         SheetAccordionTabComponent,
     ],
     templateUrl: './workout-exercise-sheet.component.html',
-    styleUrl: './workout-exercise-sheet.component.scss',
+    styleUrl: './workout-exercise-sheet.component.scss'
 })
 export class WorkoutExerciseSheetComponent {
     protected overlayController = inject(OverlayControllerService);

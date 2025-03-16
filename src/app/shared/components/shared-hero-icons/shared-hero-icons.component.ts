@@ -7,14 +7,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'shared-hero-icons',
-    standalone: true,
     imports: [],
     template: ``,
     styleUrl: './shared-hero-icons.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '[innerHTML]': '_icon()',
-    },
+    }
 })
 export class SharedHeroIconsComponent {
     @Input({ required: true }) icon:

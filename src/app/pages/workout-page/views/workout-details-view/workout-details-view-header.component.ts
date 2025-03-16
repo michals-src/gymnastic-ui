@@ -37,8 +37,7 @@ import { CapitalizePipe } from '@app/shared/pipes/capitalize.pipe';
         </section>
     `,
     styleUrls: [],
-    imports: [RouterModule, SharedHeroIconsComponent, CapitalizePipe, DatePipe],
-    standalone: true,
+    imports: [RouterModule, SharedHeroIconsComponent, CapitalizePipe, DatePipe]
 })
 export class WorkoutDetailsViewHeader {
     @Input() workoutDetails: any = null;

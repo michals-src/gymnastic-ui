@@ -9,10 +9,9 @@ import { ControlSelectComponent } from "../../../../shared/components/controls/c
 
 @Component({
     selector: 'app-home-view',
-    standalone: true,
     templateUrl: './home-view.component.html',
     styleUrl: './home-view.component.scss',
-    imports: [HomeViewCalendarReviewComponent, HeroIconsComponent, BottomBarComponent, RouterModule, BottomSheetComponent, ControlSelectComponent],
+    imports: [HomeViewCalendarReviewComponent, HeroIconsComponent, BottomBarComponent, RouterModule, BottomSheetComponent, ControlSelectComponent]
 })
 export class HomeViewComponent {
     protected WORKOUT_PAGE_ROUTES_ENUM = WORKOUT_PAGE_ROUTES_ENUM;

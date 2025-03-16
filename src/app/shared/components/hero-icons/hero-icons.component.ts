@@ -5,15 +5,14 @@ import { NgStyle } from '@angular/common';
 export type THeroIcons = keyof typeof HeroIcons;
 
 @Component({
-  selector: 'hero-icons',
-  standalone: true,
-  imports: [NgStyle],
-  template: `<span
+    selector: 'hero-icons',
+    imports: [NgStyle],
+    template: `<span
     #icon
     class="hero-icon"
     [ngStyle]="{ '--hero-icon-size': size + 'px' }"
   ></span>`,
-  styleUrls: ['./hero-icons.component.css'],
+    styleUrls: ['./hero-icons.component.css']
 })
 export class HeroIconsComponent {
   protected _icon: any = null;

@@ -24,7 +24,6 @@ import { SharedHeroIconsComponent } from '../../../../shared/components/shared-h
 
 @Component({
     selector: 'app-workout-create-view',
-    standalone: true,
     template: `
         <div class="w-full h-screen px-8 flex flex-col pt-12">
             <a [routerLink]="['/']" class="flex gap-2 items-center text-xs mb-12">
@@ -59,7 +58,7 @@ import { SharedHeroIconsComponent } from '../../../../shared/components/shared-h
         </div>
     `,
     styleUrl: './workout-create-view.component.scss',
-    imports: [RouterModule, FormsModule, HeroIconsComponent, ControlSelectComponent, SharedHeroIconsComponent],
+    imports: [RouterModule, FormsModule, HeroIconsComponent, ControlSelectComponent, SharedHeroIconsComponent]
 })
 export class WorkoutCreateViewComponent {
     protected overlay = inject(Overlay);

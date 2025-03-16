@@ -5,10 +5,9 @@ import { ExercisesService } from './shared/services/exercises.service';
 
 @Component({
     selector: 'app-root',
-    standalone: true,
     template: `<router-outlet />`,
     styleUrl: './app.component.scss',
-    imports: [RouterOutlet],
+    imports: [RouterOutlet]
 })
 export class AppComponent {
     title = 'gymnastic';

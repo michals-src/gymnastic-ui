@@ -25,10 +25,9 @@ import { WorkoutService } from '../../services/workout.service';
 
 @Component({
     selector: 'app-workout-create-exercise-sheet',
-    standalone: true,
     templateUrl: './workout-create-exercise-sheet.component.html',
     styleUrl: './workout-create-exercise-sheet.component.scss',
-    imports: [HeroIconsComponent, BottomSheetComponent, ControlSelectComponent, FormsModule, JsonPipe, NgClass],
+    imports: [HeroIconsComponent, BottomSheetComponent, ControlSelectComponent, FormsModule, JsonPipe, NgClass]
 })
 export class WorkoutCreateExerciseSheetComponent {
     protected apiService = inject(ApiService);
