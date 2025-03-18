@@ -38,6 +38,6 @@ import { SharedHeroIconsComponent } from '@app/shared/components/shared-hero-ico
     styleUrls: [],
     imports: [RouterModule, SharedHeroIconsComponent, DatePipe],
 })
-export class WorkoutDetailsViewHeader {
+export class WorkoutHeaderComponent {
     @Input() workoutDetails: any = null;
 }

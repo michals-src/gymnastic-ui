@@ -11,17 +11,18 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { IWorkout } from '@app/shared/interfaces/i-workout';
 import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
-import { WorkoutHeaderComponent } from '../components/workout-header/workout-header.component';
 import { WorkoutService } from '../services/workout.service';
-import { WorkoutExerciseComponent } from './components/workout-exercise.component';
+import { WorkoutHeaderComponent } from '@app/pages/workout-page/workout-view/components/workout-header.component';
 
 export interface IWorkoutResponse {
     workout: IWorkout;
-    timeline: {
-        series: IWorkoutSetsResponse;
-        exercise: IWorkoutExerciseResponse;
-    }[];
+    timeline: Array<WorkoutTimelineResponseModel>;
 }
+
+export type WorkoutTimelineResponseModel = {
+    series: IWorkoutSetsResponse;
+    exercise: IWorkoutExerciseResponse;
+};
 
 export interface IWorkoutSetsResponse {
     id: number;
@@ -65,7 +66,6 @@ export interface IWorkoutTimeline {
         @if (workoutDetails()) {
             <div class="px-4 min-h-screen">
                 <app-workout-header [workoutDetails]="workoutDetails()" />
-
                 <div class="flex flex-col gap-6">
                     @for (workoutExercise of workoutExercises(); track $index) {
                         <div class="rounded-3xl px-2 pt-3 pb-2">
@@ -99,7 +99,7 @@ export interface IWorkoutTimeline {
     `,
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [WorkoutHeaderComponent, WorkoutExerciseComponent],
+    imports: [WorkoutHeaderComponent],
 })
 export class WorkoutViewComponent {
     private activatedRoute = inject(ActivatedRoute);
