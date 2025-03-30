@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ExercisesService } from './shared/services/exercises.service';
 
 @Component({
     selector: 'app-root',
@@ -9,11 +8,5 @@ import { ExercisesService } from './shared/services/exercises.service';
     imports: [RouterOutlet],
 })
 export class AppComponent {
-    title = 'gymnastic';
-
-    constructor(protected exercisesService: ExercisesService) {
-        this.exercisesService.getExercises();
-    }
-
-    ngAfterViewInit(): void {}
+    title = 'Gymnastic';
 }

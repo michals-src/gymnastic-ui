@@ -9,10 +9,10 @@ import {
     WritableSignal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { WorkoutHeaderComponent } from '@app/pages/workout-page/workout-view/components/workout-header.component';
 import { IWorkout } from '@app/shared/interfaces/i-workout';
 import { OverlayControllerService } from '@app/shared/services/overlay-controller.service';
 import { WorkoutService } from '../services/workout.service';
-import { WorkoutHeaderComponent } from '@app/pages/workout-page/workout-view/components/workout-header.component';
 
 export interface IWorkoutResponse {
     workout: IWorkout;
@@ -105,24 +105,25 @@ export class WorkoutViewComponent {
     private activatedRoute = inject(ActivatedRoute);
     protected workoutService = inject(WorkoutService);
 
-    protected workoutId = this.workoutService.workoutId;
-    protected workoutDetails = this.workoutService.workoutDetails;
+    protected workoutId = null;
+    protected workoutDetails = null;
     protected workoutExercises = computed(() => {
-        const exercises = this.workoutService.workoutExercises() || [];
-        return exercises.reduce((_exercises, _exercise) => {
-            const _group = _exercises.find((g) => g?.key === _exercise.group) || null;
+        return [];
+        // const exercises = this.workoutService.workoutExercises() || [];
+        // return exercises.reduce((_exercises, _exercise) => {
+        //     const _group = _exercises.find((g) => g?.key === _exercise.group) || null;
 
-            if (!_group) {
-                _exercises.push({
-                    key: _exercise.group,
-                    values: [_exercise],
-                });
-            } else {
-                _group.values.push(_exercise);
-            }
+        //     if (!_group) {
+        //         _exercises.push({
+        //             key: _exercise.group,
+        //             values: [_exercise],
+        //         });
+        //     } else {
+        //         _group.values.push(_exercise);
+        //     }
 
-            return _exercises;
-        }, []);
+        //     return _exercises;
+        // }, []);
     });
 
     protected overlayController = inject(OverlayControllerService);
@@ -200,7 +201,7 @@ export class WorkoutViewComponent {
 
     constructor() {
         const id = this.activatedRoute.snapshot.params?.['id'] || null;
-        this.workoutService.setWorkoutId(id);
+        // this.workoutService.setWorkoutId(id);
     }
     ngOnInit(): void {
         if (this.workoutId()) this.workoutService.getWorkout();
