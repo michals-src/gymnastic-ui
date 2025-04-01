@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { SharedHeroIconsComponent } from '../../shared/components/shared-hero-icons/shared-hero-icons.component';
 
 @Component({
@@ -14,10 +14,15 @@ import { SharedHeroIconsComponent } from '../../shared/components/shared-hero-ic
                 <div
                     class="px-3 py-2 bg-green-900 text-white rounded-4xl inline-flex gap-4 justify-center items-center m-auto">
                     <a
-                        class="bg-white rounded-full text-green-900 h-[32px] flex items-center justify-center gap-2 px-6">
+                        [routerLink]="['/']"
+                        routerLinkActivate="bg-white text-green-900"
+                        class="rounded-full h-[32px] flex items-center justify-center gap-2 px-6">
                         <shared-hero-icons [format]="'outline'" [icon]="'HomeIcon'" class="size-5" />
                     </a>
-                    <a class="rounded-full text-white h-[32px] flex items-center justify-center gap-2 px-6">
+                    <a
+                        routerLinkActivate="bg-white text-green-900"
+                        [routerLink]="['/atlas']"
+                        class="rounded-full text-white h-[32px] flex items-center justify-center gap-2 px-6">
                         <shared-hero-icons [format]="'outline'" [icon]="'BookOpenIcon'" class="size-5" />
                     </a>
                 </div>
@@ -27,6 +32,6 @@ import { SharedHeroIconsComponent } from '../../shared/components/shared-hero-ic
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [RouterOutlet, SharedHeroIconsComponent],
+    imports: [RouterOutlet, RouterLink, SharedHeroIconsComponent],
 })
 export class HomePageComponent {}

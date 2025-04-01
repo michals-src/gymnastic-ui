@@ -12,6 +12,7 @@ export const HOME_PAGE_ROUTES: Routes = [
             {
                 path: '',
                 component: HomeViewComponent,
+                pathMatch: 'full',
             },
             {
                 path: 'atlas',
