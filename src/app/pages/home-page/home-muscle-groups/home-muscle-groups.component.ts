@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HomeMuscleGroupsSearchComponent } from './components/home-muscle-groups-search/home-muscle-groups-search.component';
 import { HomeMuscleGroupsListHeaderComponent } from './components/home-muscle-groups-list-header/home-muscle-groups-list-header.component';
 import { HomeMuscleGroupsListComponent } from './components/home-muscle-groups-list/home-muscle-groups-list.component';
+import { HomeMuscleGroupsSearchComponent } from './components/home-muscle-groups-search/home-muscle-groups-search.component';
 
 @Component({
     selector: 'app-home-muscle-groups',

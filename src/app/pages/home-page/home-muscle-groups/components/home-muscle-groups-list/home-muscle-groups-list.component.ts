@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SharedHeroIconsComponent } from '@app/shared/components/shared-hero-icons/shared-hero-icons.component';
 
 @Component({
@@ -6,6 +7,7 @@ import { SharedHeroIconsComponent } from '@app/shared/components/shared-hero-ico
     template: `
         <div class="flex flex-col gap-4">
             <a
+                [routerLink]="'1'"
                 class="bg-white px-6 py-3 rounded-2xl border-b border-b-gray-200 pb-4 flex gap-4 flex-nowrap items-center">
                 <div class="flex flex-col w-full">
                     <p class="text-sm leading-[150%]">Plecy</p>
@@ -16,6 +18,7 @@ import { SharedHeroIconsComponent } from '@app/shared/components/shared-hero-ico
                 </div>
             </a>
             <a
+                [routerLink]="'atlas/1'"
                 class="bg-white px-6 py-3 rounded-2xl border-b border-b-gray-200 pb-4 flex gap-4 flex-nowrap items-center">
                 <div class="flex flex-col w-full">
                     <p class="text-sm leading-[150%]">Klatka piersiowa</p>
@@ -52,7 +55,7 @@ import { SharedHeroIconsComponent } from '@app/shared/components/shared-hero-ico
         </div>
     `,
     styleUrls: [],
-    imports: [SharedHeroIconsComponent],
+    imports: [RouterLink, SharedHeroIconsComponent],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeMuscleGroupsListComponent {}
