@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SharedHeroIconsComponent } from '../../shared/components/shared-hero-icons/shared-hero-icons.component';
 
 @Component({
@@ -15,14 +15,15 @@ import { SharedHeroIconsComponent } from '../../shared/components/shared-hero-ic
                     class="px-3 py-2 bg-green-900 text-white rounded-4xl inline-flex gap-4 justify-center items-center m-auto">
                     <a
                         [routerLink]="['/']"
-                        routerLinkActivate="bg-white text-green-900"
+                        [routerLinkActive]="['bg-white', 'text-green-900']"
+                        [routerLinkActiveOptions]="{ exact: true }"
                         class="rounded-full h-[32px] flex items-center justify-center gap-2 px-6">
                         <shared-hero-icons [format]="'outline'" [icon]="'HomeIcon'" class="size-5" />
                     </a>
                     <a
-                        routerLinkActivate="bg-white text-green-900"
+                        [routerLinkActive]="['bg-white', 'text-green-900']"
                         [routerLink]="['/atlas']"
-                        class="rounded-full text-white h-[32px] flex items-center justify-center gap-2 px-6">
+                        class="rounded-full h-[32px] flex items-center justify-center gap-2 px-6">
                         <shared-hero-icons [format]="'outline'" [icon]="'BookOpenIcon'" class="size-5" />
                     </a>
                 </div>
@@ -32,6 +33,6 @@ import { SharedHeroIconsComponent } from '../../shared/components/shared-hero-ic
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [RouterOutlet, RouterLink, SharedHeroIconsComponent],
+    imports: [RouterOutlet, RouterLinkActive, RouterLink, SharedHeroIconsComponent],
 })
 export class HomePageComponent {}

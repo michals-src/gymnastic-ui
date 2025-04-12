@@ -1,9 +1,13 @@
+import { SharedExerciseModel } from '@app/shared/stores/shared-exercises/shared-exercises.model';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { SharedExerciseModel, SharedExercisesStoreModel } from './shared-exercises.model';
 
-export const SharedExercisesStore = signalStore(
-    withState<SharedExercisesStoreModel>({
+export const WorkoutCreateAtlasExercisesStore = signalStore(
+    withState<{
+        dataSource: Array<any>;
+        isLoading: boolean;
+    }>({
         dataSource: [],
+        isLoading: false,
     }),
     withMethods((store) => ({
         setExercises(dataSource: Array<SharedExerciseModel>): void {
